@@ -2,11 +2,13 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.15.1"
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
     }
 }
 
@@ -19,6 +21,7 @@ apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
+apply plugin:"com.moowork.node"
 
 repositories {
     mavenLocal()
@@ -65,6 +68,32 @@ bootRun {
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
 }
+
+
+node {
+    version = '10.14.1'
+    yarnVersion = '1.9.4'
+    distBaseUrl = 'https://nodejs.org/dist'
+    download = true
+    workDir = file("${project.buildDir}/nodejs")
+    npmWorkDir = file("${project.buildDir}/npm")
+    yarnWorkDir = file("${project.buildDir}/yarn")
+    nodeModulesDir = file("${project.projectDir}/react-app")
+}
+
+task bundle(type: YarnTask, dependsOn: 'yarn') {
+    group = 'build'
+    description = 'Build the client bundle'
+    args = ['run', 'bundle']
+}
+
+task webpack(type: YarnTask, dependsOn: 'yarn') {
+    group = 'application'
+    description = 'Build the client bundle in watch mode'
+    args = ['run', 'start']
+}
+
+//bootRun.dependsOn(['webpack'])
 
 
 assets {

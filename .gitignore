@@ -10,3 +10,6 @@ out/
 .project
 .settings
 .classpath
+node_modules
+*.lock
+package-lock.json
