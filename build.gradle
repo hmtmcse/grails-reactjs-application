@@ -75,9 +75,9 @@ node {
     yarnVersion = '1.9.4'
     distBaseUrl = 'https://nodejs.org/dist'
     download = true
-    workDir = file("${project.buildDir}/nodejs")
-    npmWorkDir = file("${project.buildDir}/npm")
-    yarnWorkDir = file("${project.buildDir}/yarn")
+    workDir = file("${project.projectDir}/node-js/nodejs")
+    npmWorkDir = file("${project.projectDir}/node-js/npm")
+    yarnWorkDir = file("${project.projectDir}/node-js/yarn")
     nodeModulesDir = file("${project.projectDir}/react-app")
 }
 

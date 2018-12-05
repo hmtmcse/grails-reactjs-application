@@ -1,4 +1,4 @@
-package grails.reactjs.application
+package com.hmtmcse.gra
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

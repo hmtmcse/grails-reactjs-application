@@ -1,4 +1,4 @@
-package grails.reactjs.application
+package com.hmtmcse.gra.system
 
 class UrlMappings {
 
@@ -9,7 +9,7 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/**"(controller: "reactJs", action: "index")
         "500"(view:'/error')
         "404"(view:'/notFound')
     }
