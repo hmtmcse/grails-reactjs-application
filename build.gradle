@@ -93,7 +93,7 @@ task webpack(type: YarnTask, dependsOn: 'yarn') {
     args = ['run', 'start']
 }
 
-//bootRun.dependsOn(['webpack'])
+//bootRun.dependsOn(['bundle'])
 
 
 assets {
