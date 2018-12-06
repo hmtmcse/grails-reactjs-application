@@ -8,13 +8,14 @@ import { mainLayoutJSS } from './../assets/jss/application-jss';
 import NavigationElement from './../components/elements/navigation-element';
 import {LayoutsRoutes} from './../config/router';
 import {PageRoutes} from "../config/router";
+import {authenticationService} from "../services/authentication-service";
 
 
 class MainLayout extends Component {
 
-    isMainLayout(){
+    urlChecker(checkingURL){
         let url = this.props.location.pathname;
-        if (url === "/"){
+        if (url === checkingURL){
             return true;
         }
         let isMain = true;
@@ -26,9 +27,16 @@ class MainLayout extends Component {
         return isMain;
     }
 
+    isMainLayout(){
+        return this.urlChecker("/");
+    }
+
+    isLoginLayout(){
+        return this.urlChecker("/login");
+    }
+
     render () {
         const { classes } = this.props;
-
         return (
             <React.Fragment>
                 <CssBaseline/>

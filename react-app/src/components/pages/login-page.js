@@ -29,6 +29,7 @@ class LoginPage extends Component {
                                 <InputLabel htmlFor="password">Password</InputLabel>
                                 <Input  name="password" type="password" id="password"/>
                             </FormControl>
+                            {GRA.localdb.printLog()}
                             <Button type="submit" fullWidth variant="raised" color="primary" children="Sign in" className={classes.submit}/>
                         </form>
                     </Paper>
