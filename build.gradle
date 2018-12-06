@@ -28,6 +28,12 @@ repositories {
     maven { url "https://repo.grails.org/grails/core" }
 }
 
+grails {
+    plugins {
+        compile project(':grails-swagger')
+    }
+}
+
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"

@@ -1,4 +1,4 @@
-package com.hmtmcse.gra.controllers
+package com.hmtmcse.gra.controllers.app
 
 class ReactJsController {
 

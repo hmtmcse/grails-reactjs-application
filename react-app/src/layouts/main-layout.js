@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
+import { Route, Redirect } from "react-router-dom";
 import {
-    CssBaseline, Paper, Avatar, Typography, FormControl, InputLabel, Input, Button,
-    withStyles, AppBar, Toolbar, IconButton, Badge, Drawer, Divider, List
+    CssBaseline, withStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { mainLayoutJSS } from './../assets/jss/application-jss';
 import NavigationElement from './../components/elements/navigation-element';
 import {LayoutsRoutes} from './../config/router';
-import {AppRouter} from './../config/router';
 import {PageRoutes} from "../config/router";
-import Route from "react-router-dom/es/Route";
-import Redirect from "react-router-dom/es/Redirect";
 
 
 class MainLayout extends Component {
@@ -43,7 +40,7 @@ class MainLayout extends Component {
                             return <Route path={route.path} component={route.component} key={key} />;
                         })}
                     </main>
-                </div>) : (<React.Fragment/>)};
+                </div>) : (<Redirect to="/login"/>)};
             </React.Fragment>
         );
     }
