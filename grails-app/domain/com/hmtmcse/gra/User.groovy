@@ -13,10 +13,11 @@ class User {
 
 
     static constraints = {
-        email(email: true, nullable: false, unique: true, blank: false)
+        email(nullable: false, unique: true, blank: false)
         password(blank: false)
         firstName(blank: false)
         lastName(nullable: true, blank: true)
+        uuid(nullable: true)
     }
 
     static mapping = {
@@ -27,6 +28,7 @@ class User {
 
     def beforeInsert (){
         this.password = this.password.encodeAsMD5()
+        this.uuid = AppUtil.uuid()
     }
 
 

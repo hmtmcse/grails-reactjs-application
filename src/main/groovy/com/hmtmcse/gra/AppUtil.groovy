@@ -13,8 +13,12 @@ class AppUtil {
         return WebUtils.retrieveGrailsWebRequest().session
     }
 
-    static infoMessage(String message, boolean status = true) {
-        return [info: message, success: status]
+    static invalidateSession() {
+        return appSession.invalidate()
+    }
+
+    static uuid(){
+        return UUID.randomUUID().toString().toUpperCase()
     }
 
 }

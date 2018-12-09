@@ -14,8 +14,9 @@ class SecurityInterceptor {
     }
 
     boolean before() {
+        return true
         if (!authenticationService.isAuthenticated()) {
-            redirect(controller: "reactJs")
+            redirect(controller: "reactJs", action:"index")
             return false
         }
         return true

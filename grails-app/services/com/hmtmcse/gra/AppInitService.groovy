@@ -3,7 +3,7 @@ package com.hmtmcse.gra
 
 class AppInitService {
 
-    def user() {
+    def initUser() {
         if (User.count() == 0) {
             User user = new User()
             user.firstName = "Touhid"

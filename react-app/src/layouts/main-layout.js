@@ -32,7 +32,11 @@ class MainLayout extends Component {
     }
 
     isLoginLayout(){
-        return this.urlChecker("/login");
+        let url = this.props.location.pathname;
+        if (url === "/login"){
+            return true;
+        }
+        return false;
     }
 
 
@@ -50,11 +54,15 @@ class MainLayout extends Component {
         </div>);
 
         let renderView = (<React.Fragment/>);
-        if (!this.isLoginLayout() && !authenticationService.isAuthenticated()){
-            renderView = (<Redirect to="/login"/>);
+        if (!authenticationService.isAuthenticated()){
+            if(!this.isLoginLayout()){
+                renderView = (<Redirect to="/login"/>);
+            }
         }else if (this.isMainLayout()) {
             renderView = mainPanel;
         }
+
+
         return (
             <React.Fragment>
                 <CssBaseline/>
