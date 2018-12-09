@@ -35,20 +35,30 @@ class MainLayout extends Component {
         return this.urlChecker("/login");
     }
 
+
+
     render () {
         const { classes } = this.props;
+        let mainPanel = (<div className={classes.root}>
+            <NavigationElement/>
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer}/>
+                {PageRoutes.map((route, key) =>{
+                    return <Route path={route.path} component={route.component} key={key} />;
+                })}
+            </main>
+        </div>);
+
+        let renderView = (<React.Fragment/>);
+        if (!this.isLoginLayout() && !authenticationService.isAuthenticated()){
+            renderView = (<Redirect to="/login"/>);
+        }else if (this.isMainLayout()) {
+            renderView = mainPanel;
+        }
         return (
             <React.Fragment>
                 <CssBaseline/>
-                {this.isMainLayout() ? (<div className={classes.root}>
-                    <NavigationElement/>
-                    <main className={classes.content}>
-                        <div className={classes.appBarSpacer}/>
-                        {PageRoutes.map((route, key) =>{
-                            return <Route path={route.path} component={route.component} key={key} />;
-                        })}
-                    </main>
-                </div>) : (<Redirect to="/login"/>)};
+                {renderView}
             </React.Fragment>
         );
     }

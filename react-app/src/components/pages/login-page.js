@@ -19,7 +19,7 @@ class LoginPage extends Component {
                         <Avatar className={classes.avatar}>
                             <LockIcon />
                         </Avatar>
-                        <Typography variant="headline">Login to Task Manager</Typography>
+                        <Typography variant="headline">Grails ReactJs Application</Typography>
                         <form method="get" action="/dashboard" className={classes.form}>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -29,7 +29,6 @@ class LoginPage extends Component {
                                 <InputLabel htmlFor="password">Password</InputLabel>
                                 <Input  name="password" type="password" id="password"/>
                             </FormControl>
-                            {GRA.localdb.printLog()}
                             <Button type="submit" fullWidth variant="raised" color="primary" children="Sign in" className={classes.submit}/>
                         </form>
                     </Paper>
