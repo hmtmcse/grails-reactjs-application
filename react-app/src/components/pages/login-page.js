@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { loginPageJSS } from './../../assets/jss/application-jss';
 import {
     CssBaseline, Paper, Avatar, Typography, FormControl, InputLabel, Input, Button,
@@ -21,11 +21,18 @@ class LoginPage extends AppComponent {
 
     doLogin = event => {
         event.preventDefault();
+        console.log(this.state.email)
+        console.log(this.state.password)
     };
 
     handleChange = event => {
         event.preventDefault();
-        const {name, value} = event.target;
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        });
     };
 
     appRender () {
@@ -45,7 +52,7 @@ class LoginPage extends AppComponent {
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
                                 <Input id="email" required name="email" autoComplete="email" autoFocus  onChange={this.handleChange}/>
                             </FormControl>
-                            <FormControl margin="normal" required fullWidth error>
+                            <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="password" >Password</InputLabel>
                                 <Input required  name="password" type="password" id="password" onChange={this.handleChange}/>
                             </FormControl>
@@ -62,5 +69,4 @@ class LoginPage extends AppComponent {
 LoginPage.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(loginPageJSS)(LoginPage);
