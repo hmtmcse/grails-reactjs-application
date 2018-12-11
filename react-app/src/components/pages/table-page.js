@@ -30,8 +30,9 @@ class TablePage extends AppComponent {
 
 
     componentDidMount() {
-        this.getToApi("apiUserV2", response => {
-            this.setState({users:response.data})
+        this.getToApi("api/v1/user/list", response => {
+            console.log(response)
+            this.setState({users:response.data.response})
         });
     }
 
@@ -50,10 +51,9 @@ class TablePage extends AppComponent {
                     </TableHead>
                     <TableBody>
                         {this.state.users.map(function(user, key) {
-
                             return (
                                 <TableRow>
-                                    <TableCell>{user.name}</TableCell>
+                                    <TableCell>{user.firstName} {user.lastName}</TableCell>
                                     <TableCell>{user.email}</TableCell>
                                 </TableRow>
                             )
