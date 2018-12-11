@@ -45,16 +45,44 @@ export default class AppComponent extends Component {
         };
     }
 
-    postToApi(url, data, success) {
+    postToApi(url, data, success, failed) {
         this.showProgressbar();
         axios({
             method: 'post',
             url: API_BASE_URL + url,
             data: data
         }).then((response) => {
-            success(response);
+            if (success !== undefined){
+                success(response);
+            }
         }).catch((error) => {
-            this.showErrorInfo(error.message);
+            if (failed !== undefined){
+                failed(error);
+            }else{
+                this.showErrorInfo(error.message);
+            }
+        }).then(() => {
+            this.hideProgressbar();
+        });
+    }
+
+    postJsonToApi(url, data, success, failed) {
+        this.showProgressbar();
+        axios({
+            method: 'post',
+            url: API_BASE_URL + url,
+            data: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' }
+        }).then((response) => {
+            if (success !== undefined){
+                success(response);
+            }
+        }).catch((error) => {
+            if (failed !== undefined){
+                failed(error);
+            }else{
+                this.showErrorInfo(error.message);
+            }
         }).then(() => {
             this.hideProgressbar();
         });

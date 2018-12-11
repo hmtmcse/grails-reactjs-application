@@ -24,7 +24,7 @@ class AuthenticationDefinitionService {
         }
         gsApiActionDefinition.includeAllThenExcludeFromResponse(["password", "dateCreated", "lastUpdated", "version"])
         gsApiActionDefinition.successResponseAsData()
-        gsApiActionDefinition.failedResponseFormat = GsApiResponseData.failed("Invalid email or password")
+        gsApiActionDefinition.failedResponseFormat = GsApiResponseData.failed("Invalid email or password !!")
         return gsApiActionDefinition
     }
 
