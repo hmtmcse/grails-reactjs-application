@@ -130,7 +130,7 @@ export default class AppComponent extends Component {
         return (
             <React.Fragment>
                 {showLoader(this.state.isSystemProgressBarEnabled)}
-                <AppSnackBar variant={this.state.systemSnackBarVariant} isOpen={this.state.showSystemSnackBar}
+                <AppSnackBar variant={this.state.systemSnackBarVariant ? this.state.systemSnackBarVariant : "error"} isOpen={this.state.showSystemSnackBar}
                              message={this.state.systemSnackBarMessage} onClose={this.closeSnackBar}/>
                 {this.appRender()}
             </React.Fragment>

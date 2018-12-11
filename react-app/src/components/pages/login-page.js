@@ -31,7 +31,7 @@ class LoginPage extends AppComponent {
                         this.showErrorInfo(response.message)
                     } else {
                         authenticationService.login(response);
-                        this.props.history.push('/');
+                        window.location = "/";
                     }
                 }
             )
