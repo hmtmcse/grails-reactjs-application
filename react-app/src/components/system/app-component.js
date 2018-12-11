@@ -45,13 +45,12 @@ export default class AppComponent extends Component {
         };
     }
 
-    postToApi(url, data, success, failed) {
+    callToApiByAxios(dataSet, success, failed){
         this.showProgressbar();
-        axios({
-            method: 'post',
-            url: API_BASE_URL + url,
-            data: data
-        }).then((response) => {
+        if (dataSet !== undefined && dataSet.url !== undefined){
+            dataSet.url = API_BASE_URL + dataSet.url
+        }
+        axios(dataSet).then((response) => {
             if (success !== undefined){
                 success(response);
             }
@@ -66,45 +65,37 @@ export default class AppComponent extends Component {
         });
     }
 
-    postJsonToApi(url, data, success, failed) {
-        this.showProgressbar();
-        axios({
+
+    postToApi(url, data, success, failed) {
+        let dataSet = {
             method: 'post',
-            url: API_BASE_URL + url,
+            url: url,
+            data: data
+        };
+        this.callToApiByAxios(dataSet, success, failed);
+    }
+
+    postJsonToApi(url, data, success, failed) {
+
+        let dataSet = {
+            method: 'post',
+            url: url,
             data: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
-        }).then((response) => {
-            if (success !== undefined){
-                success(response);
-            }
-        }).catch((error) => {
-            if (failed !== undefined){
-                failed(error);
-            }else{
-                this.showErrorInfo(error.message);
-            }
-        }).then(() => {
-            this.hideProgressbar();
-        });
+        };
+        this.callToApiByAxios(dataSet, success, failed);
     }
 
     deleteToApi() {
     }
 
+
     getToApi(url, success) {
-        this.showProgressbar();
-        axios({
+        let dataSet = {
             method: 'get',
-            url: API_BASE_URL + url
-        }).then((response) => {
-            if (success !== undefined){
-                success(response);
-            }
-        }).catch((error) => {
-            this.showErrorInfo(error.message);
-        }).then(() => {
-            this.hideProgressbar();
-        });
+            url: url
+        };
+        this.callToApiByAxios(dataSet, success);
     }
 
     getList() {

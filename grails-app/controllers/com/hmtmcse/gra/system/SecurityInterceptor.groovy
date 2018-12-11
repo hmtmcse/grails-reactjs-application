@@ -1,6 +1,9 @@
 package com.hmtmcse.gra.system
 
 import com.hmtmcse.gra.AuthenticationService
+import com.hmtmcse.gs.GsConfigHolder
+import com.hmtmcse.gs.data.GsApiResponseData
+import grails.converters.JSON
 
 
 class SecurityInterceptor {
@@ -15,7 +18,12 @@ class SecurityInterceptor {
 
     boolean before() {
         if (!authenticationService.isAuthenticated()) {
-            redirect(controller: "reactJs", action:"index")
+            if (controllerName.startsWith(GsConfigHolder.controllerStartWithDefault.toLowerCase())){
+                response.status = 401
+                render(GsApiResponseData.failed("Unauthorized Access").toMap() as JSON)
+            }else{
+                redirect(controller: "reactJs", action:"index")
+            }
             return false
         }
         return true
