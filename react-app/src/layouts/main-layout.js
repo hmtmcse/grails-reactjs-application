@@ -9,9 +9,10 @@ import NavigationElement from './../components/elements/navigation-element';
 import {LayoutsRoutes} from './../config/router';
 import {PageRoutes} from "../config/router";
 import {authenticationService} from "../services/authentication-service";
+import AppComponent from "../components/system/app-component";
 
 
-class MainLayout extends Component {
+class MainLayout extends AppComponent {
 
     urlChecker(checkingURL){
         let url = this.props.location.pathname;
@@ -41,7 +42,9 @@ class MainLayout extends Component {
 
 
 
-    render () {
+
+
+    appRender () {
         const { classes } = this.props;
         let mainPanel = (<div className={classes.root}>
             <NavigationElement/>

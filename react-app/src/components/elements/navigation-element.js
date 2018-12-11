@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
     AppBar, Badge, Divider, Drawer, IconButton,
     Icon, ListItemIcon, ListItemText, MenuItem, MenuList, Toolbar, Typography, withStyles
@@ -9,17 +9,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import MenuIcon from "../../../node_modules/@material-ui/icons/Menu";
 import {navigationElementJSS} from "../../assets/jss/application-jss";
-
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import Route from "react-router-dom/es/Route";
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import {authenticationService} from "../../services/authentication-service";
+import AppComponent from "../system/app-component";
 
 
-class NavigationElement extends Component {
+class NavigationElement extends AppComponent {
 
     constructor(props) {
         super(props);
@@ -36,7 +33,17 @@ class NavigationElement extends Component {
         this.setState({ open: false });
     };
 
-    render(){
+
+    logout = event =>{
+        event.preventDefault();
+        this.getToApi("api/v1/authentication/logout", response => {
+            authenticationService.logout();
+            window.location = "/login"
+        });
+    };
+
+
+    appRender(){
         const { classes } = this.props;
 
         return (
@@ -54,8 +61,11 @@ class NavigationElement extends Component {
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
+                                <NotificationsIcon/>
                             </Badge>
+                        </IconButton>
+                        <IconButton color="inherit">
+                            <ExitToApp onClick={this.logout}/>
                         </IconButton>
                     </Toolbar>
                 </AppBar>

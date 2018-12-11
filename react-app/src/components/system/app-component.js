@@ -97,7 +97,9 @@ export default class AppComponent extends Component {
             method: 'get',
             url: API_BASE_URL + url
         }).then((response) => {
-            success(response);
+            if (success !== undefined){
+                success(response);
+            }
         }).catch((error) => {
             this.showErrorInfo(error.message);
         }).then(() => {

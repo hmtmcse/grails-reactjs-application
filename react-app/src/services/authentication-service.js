@@ -1,8 +1,13 @@
 
-const login = () => {};
-const logout = () => {};
+const login = (loginData) => {
+    GRA.localdb.addAsJSONString(USER_AUTH_INFO, loginData)
+};
+const logout = () => {
+    GRA.localdb.remove(USER_AUTH_INFO)
+};
+
 const isAuthenticated = () => {
-    return true //!!GRA.localdb.getByKey(USER_AUTH_INFO)
+    return !!GRA.localdb.getByKey(USER_AUTH_INFO)
 };
 
 

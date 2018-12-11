@@ -7,21 +7,18 @@ import {
 import PropTypes from 'prop-types';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import AppComponent from "../system/app-component";
+import {Redirect} from "react-router-dom";
+import {authenticationService} from "../../services/authentication-service";
 
 
 class LoginPage extends AppComponent {
 
     constructor(props) {
         super(props);
-        this.state = {
-            loginDetails: {password: "", email: ""}
-        };
     }
 
     doLogin = event => {
         event.preventDefault();
-        console.log(this.state.email)
-        console.log(this.state.password)
         if (this.state.email === "" || this.state.email == null) {
             this.showErrorInfo("Please Enter Email.")
         } else if (this.state.password === "" || this.state.password == null) {
@@ -33,8 +30,8 @@ class LoginPage extends AppComponent {
                     if (!response.isSuccess) {
                         this.showErrorInfo(response.message)
                     } else {
-                        console.log(response)
-                        this.showSuccessInfo(response.response.firstName)
+                        authenticationService.login(response);
+                        this.props.history.push('/');
                     }
                 }
             )

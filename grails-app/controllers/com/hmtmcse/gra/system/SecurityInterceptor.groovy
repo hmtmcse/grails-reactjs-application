@@ -9,12 +9,11 @@ class SecurityInterceptor {
 
     SecurityInterceptor() {
         matchAll()
-                .excludes(controller: "apiAuthentication")
+                .excludes(controller: "apiAuthenticationV1")
                 .excludes(controller: "reactJs")
     }
 
     boolean before() {
-        return true
         if (!authenticationService.isAuthenticated()) {
             redirect(controller: "reactJs", action:"index")
             return false
