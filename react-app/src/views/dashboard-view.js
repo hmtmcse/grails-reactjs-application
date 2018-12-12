@@ -10,7 +10,7 @@ const styles = theme => ({
 });
 
 class DashboardView extends RaViewComponent {
-    render () {
+    appRender () {
         const { classes } = this.props;
         return <h1 className={classes.root}>Dashboard View</h1>;
     }

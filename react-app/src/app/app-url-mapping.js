@@ -5,6 +5,7 @@ import NotFoundView from './../views/not-found-view';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import React from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import UserMainView from "../views/user/user-main-view";
 
 
 const Layouts = [
@@ -27,6 +28,14 @@ const ViewsUrlsMapping = [
         name: "Dashboard",
         icon: DashboardIcon,
         component: DashboardView,
+        isLeftNav: true,
+        isActive: true,
+    },
+    {
+        path: "/user",
+        name: "User",
+        icon: DashboardIcon,
+        component: UserMainView,
         isLeftNav: true,
         isActive: true,
     }
