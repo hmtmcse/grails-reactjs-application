@@ -4,5 +4,7 @@ export const AppConstant = {
     loginLabel: "Grails ReactJs Application",
 
 
-    rootUrl: "/"
+    rootUrl: "/",
+    loginUrl: "/login",
+    loginSuccessUrl: "/dashboard",
 };

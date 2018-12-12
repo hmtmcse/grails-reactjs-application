@@ -4,20 +4,22 @@ import {
     Icon, ListItemIcon, ListItemText, MenuItem, MenuList, Toolbar, Typography, withStyles
 } from '@material-ui/core';
 import { NavLink } from "react-router-dom";
-import {PageRoutes} from './../../config/router';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import MenuIcon from "../../../node_modules/@material-ui/icons/Menu";
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ExitToApp from '@material-ui/icons/ExitToApp';
-import {authenticationService} from "../../services/authentication-service";
-import AppComponent from "../system/app-component";
+import MenuIcon from '@material-ui/icons/Menu';
+import RaViewComponent from "../artifacts/ra-view-component";
+import {ApiURL} from "../app/api-url";
+import {ViewsUrlsMapping} from "../app/app-url-mapping";
+import {RaUrlUtil} from "../artifacts/ra-url-util";
 import {navigationSnippetJSS} from "../assets/jss/navigation-snippet-jss";
+import {AuthenticationService} from "../services/authentication-service";
 import {AppConstant} from "../app/app-constant";
 
 
-class NavigationSnippet extends AppComponent {
+class NavigationSnippet extends RaViewComponent {
 
     constructor(props) {
         super(props);
@@ -37,9 +39,9 @@ class NavigationSnippet extends AppComponent {
 
     logout = event =>{
         event.preventDefault();
-        this.getToApi("api/v1/authentication/logout", response => {
-            authenticationService.logout();
-            window.location = "/login"
+        this.getToApi(ApiURL.Logout, response => {
+            AuthenticationService.logout();
+            RaUrlUtil.redirectTo("/login");
         });
     };
 
@@ -80,21 +82,23 @@ class NavigationSnippet extends AppComponent {
                     </div>
                     <Divider />
                     <MenuList>
-                        {PageRoutes.map((route, i) => {
-                            return(
-                                <NavLink to={route.path} className={classes.removeDecoration} key={i}>
-                                    <MenuItem button>
-                                        <ListItemIcon>
-                                            {typeof route.icon === "string" ? (
-                                                <Icon>{route.icon}</Icon>
-                                            ) : (
-                                                <route.icon />
-                                            )}
-                                        </ListItemIcon>
-                                        <ListItemText primary={route.name} />
-                                    </MenuItem>
-                                </NavLink>
-                            )
+                        {ViewsUrlsMapping.map((route, i) => {
+                            if (route.isActive && route.isLeftNav){
+                                return(
+                                    <NavLink to={route.path} className={classes.removeDecoration} key={i}>
+                                        <MenuItem button>
+                                            <ListItemIcon>
+                                                {typeof route.icon === "string" ? (
+                                                    <Icon>{route.icon}</Icon>
+                                                ) : (
+                                                    <route.icon />
+                                                )}
+                                            </ListItemIcon>
+                                            <ListItemText primary={route.name} />
+                                        </MenuItem>
+                                    </NavLink>
+                                )
+                            }
                         })}
                     </MenuList>
                 </Drawer>

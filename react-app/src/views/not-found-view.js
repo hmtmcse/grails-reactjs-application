@@ -9,10 +9,10 @@ const styles = theme => ({
     }
 });
 
-class DashboardView extends RaViewComponent {
+class NotFoundView extends RaViewComponent {
     render () {
         const { classes } = this.props;
-        return <h1 className={classes.root}>Dashboard View</h1>;
+        return <h1 className={classes.root}>404 Not Found!!   </h1>;
     }
 }
-export default withStyles(styles)(DashboardView);
+export default withStyles(styles)(NotFoundView);

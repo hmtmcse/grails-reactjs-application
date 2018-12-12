@@ -47,7 +47,7 @@ export default class RaViewComponent extends Component {
     callToApiByAxios(dataSet, success, failed){
         this.showProgressbar();
         if (dataSet !== undefined && dataSet.url !== undefined){
-            dataSet.url = API_BASE_URL + dataSet.url
+            dataSet.url = GRA.baseURL + dataSet.url
         }
         axios(dataSet).then((response) => {
             if (success !== undefined){

@@ -33,7 +33,7 @@ class LoginLayout extends RaViewComponent {
                         this.showErrorInfo(response.message)
                     } else {
                         AuthenticationService.login(response);
-                        RaUrlUtil.redirectTo(AppConstant.rootUrl)
+                        RaUrlUtil.redirectTo(AppConstant.loginSuccessUrl)
                     }
                 }
             )

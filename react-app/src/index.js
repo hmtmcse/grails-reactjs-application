@@ -1,4 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {LayoutUrlsMapping} from "./app/app-url-mapping";
 
-ReactDOM.render(<h1>Bismillah</h1>, document.getElementById('root'));
+ReactDOM.render(<LayoutUrlsMapping/>, document.getElementById('root'));
