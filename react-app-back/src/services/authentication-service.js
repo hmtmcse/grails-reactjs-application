@@ -11,7 +11,7 @@ const isAuthenticated = () => {
 };
 
 
-export const AuthenticationService = {
+export const authenticationService = {
     login,
     logout,
     isAuthenticated,

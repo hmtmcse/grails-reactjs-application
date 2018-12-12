@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {showLoader} from './common-helper';
-import AppSnackBar from './app-snack-bar';
-import {API_BASE_URL} from './app-constant';
+import {RaUtil} from './ra-util';
+import RaSnackBar from './ra-snack-bar';
 import axios from 'axios';
 
 
-export default class AppComponent extends Component {
+export default class RaViewComponent extends Component {
 
     showProgressbar = () => {
         this.setState({isSystemProgressBarEnabled: true})
@@ -76,7 +75,6 @@ export default class AppComponent extends Component {
     }
 
     postJsonToApi(url, data, success, failed) {
-
         let dataSet = {
             method: 'post',
             url: url,
@@ -112,7 +110,7 @@ export default class AppComponent extends Component {
 
     appRender() {
         return (
-            <h1>AppComponent</h1>
+            <h1>React Application View Component</h1>
         );
     }
 
@@ -120,8 +118,8 @@ export default class AppComponent extends Component {
     render() {
         return (
             <React.Fragment>
-                {showLoader(this.state.isSystemProgressBarEnabled)}
-                <AppSnackBar variant={this.state.systemSnackBarVariant ? this.state.systemSnackBarVariant : "error"} isOpen={this.state.showSystemSnackBar}
+                {RaUtil.showLoader(this.state.isSystemProgressBarEnabled)}
+                <RaSnackBar variant={this.state.systemSnackBarVariant ? this.state.systemSnackBarVariant : "error"} isOpen={this.state.showSystemSnackBar}
                              message={this.state.systemSnackBarMessage} onClose={this.closeSnackBar}/>
                 {this.appRender()}
             </React.Fragment>

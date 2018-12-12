@@ -1,7 +1,8 @@
 export const AppConstant = {
-    appName,
-    navName
-};
+    appName: "HMTMCSE",
+    navName: "Navigation",
+    loginLabel: "Grails ReactJs Application",
 
-const appName = "HMTMCSE";
-const navName = "Navigation";
+
+    rootUrl: "/"
+};

@@ -1,5 +1,4 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {LayoutRouter} from './config/router';
 
-ReactDOM.render(<LayoutRouter/>, document.getElementById('root'));
+ReactDOM.render(<h1>Bismillah</h1>, document.getElementById('root'));

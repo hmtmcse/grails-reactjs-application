@@ -14,6 +14,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import {authenticationService} from "../../services/authentication-service";
 import AppComponent from "../system/app-component";
+import {AppConstant} from "../../app/app-constant";
 
 
 class NavigationElement extends AppComponent {
@@ -57,7 +58,7 @@ class NavigationElement extends AppComponent {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="title" color="inherit" noWrap className={classes.title}>
-                            HMTMCSE
+                            {AppConstant.appName}
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -72,7 +73,7 @@ class NavigationElement extends AppComponent {
                 <Drawer variant="permanent" classes={{paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose)}}>
                     <div className={classes.toolbarIcon}>
                         <Typography variant="title" color="primary" align="center" noWrap>
-                            Navigation
+                            {AppConstant.navName}
                         </Typography>
                         <IconButton onClick={this.handleDrawerClose}>
                             <ChevronLeftIcon />
