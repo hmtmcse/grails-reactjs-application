@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {RaUtil} from './ra-util';
 import RaSnackBar from './ra-snack-bar';
 import axios from 'axios';
+import {AuthenticationService} from "../services/authentication-service";
+import {RaUrlUtil} from "./ra-url-util";
+import {AppConstant} from "../app/app-constant";
 
 
 export default class RaViewComponent extends Component {
@@ -54,7 +57,9 @@ export default class RaViewComponent extends Component {
                 success(response);
             }
         }).catch((error) => {
-            if (failed !== undefined){
+            if (error.response.status === 401){
+                AuthenticationService.logout();
+            }else if (failed !== undefined){
                 failed(error);
             }else{
                 this.showErrorInfo(error.message);

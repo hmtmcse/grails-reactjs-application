@@ -86,7 +86,7 @@ class UserMainView extends RaViewComponent {
                                 <TableBody>
                                     {this.state.users.map(function(user, key) {
                                         return (
-                                            <TableRow>
+                                            <TableRow >
                                                 <TableCell>{user.firstName} {user.lastName}</TableCell>
                                                 <TableCell>{user.email}</TableCell>
                                             </TableRow>

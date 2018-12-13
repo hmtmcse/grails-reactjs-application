@@ -41,7 +41,6 @@ class NavigationSnippet extends RaViewComponent {
         event.preventDefault();
         this.getToApi(ApiURL.Logout, response => {
             AuthenticationService.logout();
-            RaUrlUtil.redirectTo("/login");
         });
     };
 
