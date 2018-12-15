@@ -1,12 +1,13 @@
 import React from 'react'
 import RaViewComponent from "./../../artifacts/ra-view-component";
 import {
-    TableRow, TableCell, TableHead, TableBody, TableFooter, TablePagination, Menu, MenuItem,
+    TableRow, TableCell, TableHead, TableBody, TableFooter, TablePagination, Paper, MenuItem,
     TableSortLabel, Table, FormControlLabel, Checkbox, FormGroup, FormLabel, RadioGroup,
     IconButton, CardContent, Typography, CardActions, CardHeader, CardMedia, Tooltip, Button, Grid, TextField
 } from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import RaTableHeader from './../../artifacts/ra-table-header';
+import RaPagination from './../../artifacts/ra-pagination';
 
 
 const styles = theme => ({
@@ -33,11 +34,19 @@ const styles = theme => ({
     },
 });
 
+
+const tableHeader = [
+    {id: 'firstName', numeric: false, disablePadding: false, label: 'Name'},
+    {id: 'email', numeric: false, disablePadding: false, label: 'Email'},
+];
+
 class UserMainView extends RaViewComponent {
 
     constructor(props) {
         super(props);
         this.state = {
+            orderBy: "id",
+            order: "desc",
             users: [],
         };
     }
@@ -57,9 +66,18 @@ class UserMainView extends RaViewComponent {
 
     };
 
+    clickOnSort = (name, row, event) => {
+        const orderBy = name;
+        let order = 'desc';
+        if (this.state.orderBy === name && this.state.order === 'desc') {
+            order = 'asc';
+        }
+        this.setState({order, orderBy});
+    };
+
+
     appRender () {
         const {classes} = this.props;
-
         return (
             <React.Fragment>
                 <Paper className={classes.mainActionArea}>
@@ -77,40 +95,25 @@ class UserMainView extends RaViewComponent {
                 <Paper className={classes.root}>
                     <div className={classes.tableWrapper}>
                         <Table className={classes.table} aria-labelledby="tableTitle">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Name</TableCell>
-                                        <TableCell>Email</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {this.state.users.map(function(user, key) {
-                                        return (
-                                            <TableRow >
-                                                <TableCell>{user.firstName} {user.lastName}</TableCell>
-                                                <TableCell>{user.email}</TableCell>
-                                            </TableRow>
-                                        )
-
-                                    })}
-                                </TableBody>
-                            </Table>
-
+                            <RaTableHeader
+                                clickForSort={this.clickOnSort}
+                                rows={tableHeader}
+                                order={this.state.order}
+                                orderBy={this.state.orderBy}/>
+                            <TableBody>
+                                {this.state.users.map(function (user, key) {
+                                    return (
+                                        <TableRow key={key}>
+                                            <TableCell>{user.firstName} {user.lastName}</TableCell>
+                                            <TableCell>{user.email}</TableCell>
+                                            <TableCell>Action</TableCell>
+                                        </TableRow>
+                                    )
+                                })}
+                            </TableBody>
+                        </Table>
                     </div>
-                    <TablePagination
-                        component="div"
-                        count={10}
-                        rowsPerPage={3}
-                        page={0}
-                        backIconButtonProps={{
-                            'aria-label': 'Previous Page',
-                        }}
-                        nextIconButtonProps={{
-                            'aria-label': 'Next Page',
-                        }}
-                        onChangePage={this.handleChangePage}
-                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    />
+                    <RaPagination total={100}/>
                 </Paper>
             </React.Fragment>
         );
