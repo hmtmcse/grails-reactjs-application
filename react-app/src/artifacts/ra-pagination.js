@@ -49,5 +49,5 @@ RaPagination.propTypes = {
     total: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number,
     offset: PropTypes.number,
-    changePagination: PropTypes.func.isRequired
+    // changePagination: PropTypes.func.isRequired
 };

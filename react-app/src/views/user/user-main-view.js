@@ -8,6 +8,7 @@ import {
 import {withStyles} from '@material-ui/core/styles';
 import RaTableHeader from './../../artifacts/ra-table-header';
 import RaPagination from './../../artifacts/ra-pagination';
+import UserCreateUpdateView from './user-create-update-view';
 
 
 const styles = theme => ({
@@ -45,6 +46,7 @@ class UserMainView extends RaViewComponent {
     constructor(props) {
         super(props);
         this.state = {
+            viewName: "main",
             orderBy: "id",
             order: "desc",
             users: [],
@@ -76,47 +78,62 @@ class UserMainView extends RaViewComponent {
     };
 
 
-    appRender () {
+    create(){
+        console.log("set state");
+    }
+
+    appRender() {
         const {classes} = this.props;
-        return (
-            <React.Fragment>
-                <Paper className={classes.mainActionArea}>
-                    <div>
-                        <Typography variant="headline">Users</Typography>
-                    </div>
-                    <div>
-                        <form className={classes.displayInline}>
-                            <TextField placeholder="search" name="search"/>
-                        </form>
-                        <Button className={classes.marginToLeft} variant="contained" color="primary" >Create</Button>
-                        <Button className={classes.marginToLeft} variant="contained" color="primary" >Reload</Button>
-                    </div>
-                </Paper>
-                <Paper className={classes.root}>
-                    <div className={classes.tableWrapper}>
-                        <Table className={classes.table} aria-labelledby="tableTitle">
-                            <RaTableHeader
-                                clickForSort={this.clickOnSort}
-                                rows={tableHeader}
-                                order={this.state.order}
-                                orderBy={this.state.orderBy}/>
-                            <TableBody>
-                                {this.state.users.map(function (user, key) {
-                                    return (
-                                        <TableRow key={key}>
-                                            <TableCell>{user.firstName} {user.lastName}</TableCell>
-                                            <TableCell>{user.email}</TableCell>
-                                            <TableCell>Action</TableCell>
-                                        </TableRow>
-                                    )
-                                })}
-                            </TableBody>
-                        </Table>
-                    </div>
-                    <RaPagination total={100}/>
-                </Paper>
-            </React.Fragment>
-        );
+        const mainView = (<React.Fragment>
+            <Paper className={classes.mainActionArea}>
+                <div>
+                    <Typography variant="headline">Users</Typography>
+                </div>
+                <div>
+                    <form className={classes.displayInline}>
+                        <TextField placeholder="search" name="search"/>
+                    </form>
+                    <Button className={classes.marginToLeft} onClick={this.create} variant="contained" color="primary">Create</Button>
+                    <Button className={classes.marginToLeft} variant="contained" color="primary">Reload</Button>
+                </div>
+            </Paper>
+            <Paper className={classes.root}>
+                <div className={classes.tableWrapper}>
+                    <Table className={classes.table} aria-labelledby="tableTitle">
+                        <RaTableHeader
+                            clickForSort={this.clickOnSort}
+                            rows={tableHeader}
+                            order={this.state.order}
+                            orderBy={this.state.orderBy}/>
+                        <TableBody>
+                            {this.state.users.map(function (user, key) {
+                                return (
+                                    <TableRow key={key}>
+                                        <TableCell>{user.firstName} {user.lastName}</TableCell>
+                                        <TableCell>{user.email}</TableCell>
+                                        <TableCell>Action</TableCell>
+                                    </TableRow>
+                                )
+                            })}
+                        </TableBody>
+                    </Table>
+                </div>
+                <RaPagination total={100}/>
+            </Paper>
+        </React.Fragment>);
+
+        let view = "";
+        switch (this.state.viewName) {
+            case "main":
+                view = mainView;
+                break;
+            case "create":
+                view = <UserCreateUpdateView/>;
+                break;
+        }
+
+
+        return view
     }
 }
 export default withStyles(styles)(UserMainView);
