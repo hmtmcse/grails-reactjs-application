@@ -44,12 +44,26 @@ export default class RaViewComponent extends Component {
             showSystemSnackBar: false,
             systemSnackBarVariant: "success",
             systemSnackBarMessage: "Empty Message",
+            formData: {},
         };
     }
 
     goToUrl = (url, event) =>{
         event.preventDefault();
         this.props.route.history.push(url)
+    };
+
+    getValueFromParams(key){
+      return this.props.route.match.params[key];
+    }
+
+
+    handleFormChange = event =>{
+        event.preventDefault();
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.state.formData[name] = value;
     };
 
     callToApiByAxios(dataSet, success, failed){
