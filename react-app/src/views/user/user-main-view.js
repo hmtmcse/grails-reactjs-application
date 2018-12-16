@@ -87,9 +87,10 @@ class UserMainView extends RaViewComponent {
     };
 
 
-    create(){
-        console.log("set state");
-    }
+    create = event =>{
+        event.preventDefault();
+        this.props.route.history.push("/user/create-update")
+    };
 
     appRender() {
         const {classes} = this.props;

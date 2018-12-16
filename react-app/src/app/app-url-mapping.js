@@ -45,6 +45,24 @@ const PrivateLayoutViews = [
     }
 ];
 
+const nestedRoutes = nestedRoutes =>{
+    if (nestedRoutes.routes) {
+       return nestedRoutes.routes.map((route, key) => {
+            console.log(route)
+            const {component, path, isActive} = route;
+            if (isActive) {
+                return (
+                    <Route
+                        exact
+                        path={path}
+                        key={key}
+                        render={(route) => <PrivateLayout component={component} route={route}/>}/>
+                )
+            }
+        })
+    }
+};
+
 export default class UrlMapping extends Component {
     render() {
         return (
@@ -71,11 +89,11 @@ export default class UrlMapping extends Component {
                                     exact
                                     path={path}
                                     key={key}
-                                    render={(route) => <PrivateLayout component={component} route={route}/>}
-                                />
+                                    render={(route) => <PrivateLayout component={component} route={route}/>}/>
                             )
                         }
                     })}
+                    {PrivateLayoutViews.map((route, key) => nestedRoutes(route))}
                     <Route component={NotFoundView}/>
                 </Switch>
             </BrowserRouter>
