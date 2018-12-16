@@ -48,7 +48,6 @@ const PrivateLayoutViews = [
 const nestedRoutes = nestedRoutes =>{
     if (nestedRoutes.routes) {
        return nestedRoutes.routes.map((route, key) => {
-            console.log(route)
             const {component, path, isActive} = route;
             if (isActive) {
                 return (

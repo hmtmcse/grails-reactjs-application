@@ -42,11 +42,6 @@ const styles = theme => ({
 
 class UserCreateUpdateView extends RaViewComponent {
 
-    cancel = event =>{
-        event.preventDefault();
-        this.props.route.history.push("/user")
-    };
-
     appRender() {
         const {classes} = this.props;
         return (<React.Fragment>
@@ -58,7 +53,7 @@ class UserCreateUpdateView extends RaViewComponent {
                     <form className={classes.displayInline}>
                         <TextField placeholder="search" name="search"/>
                     </form>
-                    <Button className={classes.marginToLeft} onClick={this.cancel} variant="contained" color="primary">Cancel</Button>
+                    <Button className={classes.marginToLeft} onClick={event =>{this.goToUrl("/user", event)}} variant="contained" color="primary">Cancel</Button>
                     <Button className={classes.marginToLeft} variant="contained" color="primary">Reload</Button>
                 </div>
             </Paper>

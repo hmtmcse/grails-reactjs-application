@@ -87,11 +87,6 @@ class UserMainView extends RaViewComponent {
     };
 
 
-    create = event =>{
-        event.preventDefault();
-        this.props.route.history.push("/user/create-update")
-    };
-
     appRender() {
         const {classes} = this.props;
         return (<React.Fragment>
@@ -103,7 +98,7 @@ class UserMainView extends RaViewComponent {
                     <form className={classes.displayInline}>
                         <TextField placeholder="search" name="search"/>
                     </form>
-                    <Button className={classes.marginToLeft} onClick={this.create} variant="contained" color="primary">Create</Button>
+                    <Button className={classes.marginToLeft} onClick={event =>{this.goToUrl("/user/create-update", event)}} variant="contained" color="primary">Create</Button>
                     <Button className={classes.marginToLeft} variant="contained" color="primary">Reload</Button>
                 </div>
             </Paper>

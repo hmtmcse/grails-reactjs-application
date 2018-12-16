@@ -47,6 +47,11 @@ export default class RaViewComponent extends Component {
         };
     }
 
+    goToUrl = (url, event) =>{
+        event.preventDefault();
+        this.props.route.history.push(url)
+    };
+
     callToApiByAxios(dataSet, success, failed){
         this.showProgressbar();
         if (dataSet !== undefined && dataSet.url !== undefined){
