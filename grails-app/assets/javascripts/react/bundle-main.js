@@ -6027,7 +6027,7 @@ eval("module.exports = function(originalModule) {\n\tif (!originalModule.webpack
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar ApiURL = exports.ApiURL = {\n    UserLogin: \"api/v1/authentication/login\",\n    Logout: \"api/v1/authentication/logout\",\n    BaseURL: GRA.baseURL\n};\n\n//# sourceURL=webpack:///./src/app/api-url.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar ApiURL = exports.ApiURL = {\n    BaseURL: GRA.baseURL,\n\n    UserLogin: \"api/v1/authentication/login\",\n    Logout: \"api/v1/authentication/logout\",\n\n    UserList: \"\",\n    UserCreate: \"\",\n    UserUpdate: \"\",\n    UserDelete: \"\",\n    UserDetails: \"\",\n\n    XXXList: \"\",\n    XXXXCreate: \"\",\n    XXXXUpdate: \"\",\n    XXXXDelete: \"\",\n    XXXXDetails: \"\"\n};\n\n//# sourceURL=webpack:///./src/app/api-url.js?");
 
 /***/ }),
 

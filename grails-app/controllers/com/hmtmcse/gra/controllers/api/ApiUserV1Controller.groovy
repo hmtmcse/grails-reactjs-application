@@ -12,4 +12,25 @@ class ApiUserV1Controller extends GsRestProcessor {
         return list(userDefinitionService.list())
     }
 
+    def postList() {
+        return list(userDefinitionService.list())
+    }
+
+    def getDetails() {
+        return list(userDefinitionService.list())
+    }
+
+    def postCreate() {
+        return create(userDefinitionService.create())
+    }
+
+    def postUpdate() {
+        return list(userDefinitionService.list())
+    }
+
+    def deleteDelete() {
+        return list(userDefinitionService.list())
+    }
+
+
 }
