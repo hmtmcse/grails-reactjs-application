@@ -11,6 +11,15 @@ import RaPagination from './../../artifacts/ra-pagination';
 import UserCreateUpdateView from './user-create-update-view';
 
 
+export const UserOtherUrls = [
+    {
+        path: "/user/create-update",
+        name: "Create Update",
+        component: UserCreateUpdateView,
+        isActive: true,
+    }
+];
+
 const styles = theme => ({
     root: {
         width: '100%',
@@ -84,7 +93,7 @@ class UserMainView extends RaViewComponent {
 
     appRender() {
         const {classes} = this.props;
-        const mainView = (<React.Fragment>
+        return (<React.Fragment>
             <Paper className={classes.mainActionArea}>
                 <div>
                     <Typography variant="headline">Users</Typography>
@@ -121,19 +130,6 @@ class UserMainView extends RaViewComponent {
                 <RaPagination total={100}/>
             </Paper>
         </React.Fragment>);
-
-        let view = "";
-        switch (this.state.viewName) {
-            case "main":
-                view = mainView;
-                break;
-            case "create":
-                view = <UserCreateUpdateView/>;
-                break;
-        }
-
-
-        return view
     }
 }
 export default withStyles(styles)(UserMainView);

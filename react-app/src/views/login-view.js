@@ -1,17 +1,19 @@
 import React from 'react';
-import {loginPageJSS} from './../../assets/jss/application-jss';
+import {LoginLayoutJss} from './../assets/jss/login-layout-jss';
 import {
     CssBaseline, Paper, Avatar, Typography, FormControl, InputLabel, Input, Button,
     withStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import LockIcon from '@material-ui/icons/LockOutlined';
-import AppComponent from "../system/app-component";
-import {Redirect} from "react-router-dom";
-import {authenticationService} from "../../services/authentication-service";
+import {AuthenticationService} from "../services/authentication-service";
+import RaViewComponent from "../artifacts/ra-view-component";
+import {RaUrlUtil} from "../artifacts/ra-url-util";
+import {AppConstant} from "./../app/app-constant";
+import {ApiURL} from "./../app/api-url";
 
 
-class LoginPage extends AppComponent {
+class LoginView extends RaViewComponent {
 
     constructor(props) {
         super(props);
@@ -24,14 +26,14 @@ class LoginPage extends AppComponent {
         } else if (this.state.password === "" || this.state.password == null) {
             this.showErrorInfo("Please Enter Password.")
         } else {
-            this.postJsonToApi("api/v1/authentication/login", {email: this.state.email, password: this.state.password},
+            this.postJsonToApi(ApiURL.UserLogin, {email: this.state.email, password: this.state.password},
                 success => {
                     let response = success.data;
                     if (!response.isSuccess) {
                         this.showErrorInfo(response.message)
                     } else {
-                        authenticationService.login(response);
-                        window.location = "/";
+                        AuthenticationService.login(response);
+                        RaUrlUtil.redirectTo(AppConstant.loginSuccessUrl)
                     }
                 }
             )
@@ -59,7 +61,7 @@ class LoginPage extends AppComponent {
                         <Avatar className={classes.avatar}>
                             <LockIcon/>
                         </Avatar>
-                        <Typography variant="headline">Grails ReactJs Application</Typography>
+                        <Typography variant="headline">{AppConstant.loginLabel}</Typography>
                         <form onSubmit={this.doLogin} className={classes.form}>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -82,7 +84,7 @@ class LoginPage extends AppComponent {
     }
 }
 
-LoginPage.propTypes = {
+LoginView.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-export default withStyles(loginPageJSS)(LoginPage);
+export default withStyles(LoginLayoutJss)(LoginView);

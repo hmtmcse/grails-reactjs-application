@@ -12,11 +12,10 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import RaViewComponent from "../artifacts/ra-view-component";
 import {ApiURL} from "../app/api-url";
-import {ViewsUrlsMapping} from "../app/app-url-mapping";
-import {RaUrlUtil} from "../artifacts/ra-url-util";
 import {navigationSnippetJSS} from "../assets/jss/navigation-snippet-jss";
 import {AuthenticationService} from "../services/authentication-service";
 import {AppConstant} from "../app/app-constant";
+import {PrivateLayoutViews} from "../app/app-url-mapping";
 
 
 class NavigationSnippet extends RaViewComponent {
@@ -81,7 +80,7 @@ class NavigationSnippet extends RaViewComponent {
                     </div>
                     <Divider />
                     <MenuList>
-                        {ViewsUrlsMapping.map((route, i) => {
+                        {PrivateLayoutViews.map((route, i) => {
                             if (route.isActive && route.isLeftNav){
                                 return(
                                     <NavLink to={route.path} className={classes.removeDecoration} key={i}>

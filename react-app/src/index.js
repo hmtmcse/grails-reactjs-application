@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {LayoutUrlsMapping} from "./app/app-url-mapping";
+import UrlMapping from "./app/app-url-mapping";
 
-ReactDOM.render(<LayoutUrlsMapping/>, document.getElementById('root'));
+ReactDOM.render(<UrlMapping/>, document.getElementById('root'));
