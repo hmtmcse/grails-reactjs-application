@@ -28,12 +28,13 @@ class UserDefinitionService {
             Object process(String fieldName, GsParamsPairData gsParamsPairData, GsApiRequestProperty propertyDefinition) throws GsRequestParamException {
                 String email = gsParamsPairData.params.email
                 if (userService.isEmailExist(email)){
-                    throw new GsRequestParamException(email + " " + "The Email already exists. Please try with other Email.")
+                    throw new GsRequestParamException(email + " Email already exists. Please try with other Email.")
                 }
                 return email
             }
         }
         gsApiActionDefinition.addRequestProperty("password").required()
+        gsApiActionDefinition.addResponseProperty("uuid")
         gsApiActionDefinition.successResponseAsData()
         return gsApiActionDefinition
 
