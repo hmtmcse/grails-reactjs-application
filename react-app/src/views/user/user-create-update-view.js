@@ -6,9 +6,7 @@ import {
     Card, CardContent, CardActions, CardHeader, Grid, withStyles
 } from '@material-ui/core'
 import {ApiURL} from "../../app/api-url";
-import {AuthenticationService} from "../../services/authentication-service";
-import {RaUrlUtil} from "../../artifacts/ra-url-util";
-import {AppConstant} from "../../app/app-constant";
+
 
 
 const styles = theme => ({
@@ -53,9 +51,7 @@ class UserCreateUpdateView extends RaViewComponent {
         let formData = this.state.formData;
         this.postJsonToApi(ApiURL.UserCreate, formData,
             success => {
-            this.processFormResponse(success.data);
-                let response = success.data;
-                console.log(response)
+            this.processFormResponse(success.data, "/user", "Successfully Created!!");
             }
         )
     };

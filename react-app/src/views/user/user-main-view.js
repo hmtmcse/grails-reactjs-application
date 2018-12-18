@@ -64,6 +64,7 @@ class UserMainView extends RaViewComponent {
 
 
     componentDidMount() {
+        this.showFlashMessage();
         this.getToApi("api/v1/user/list", response => {
             this.setState({users:response.data.response})
         });

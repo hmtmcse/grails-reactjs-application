@@ -5,6 +5,7 @@ import axios from 'axios';
 import {AuthenticationService} from "../services/authentication-service";
 import {RaUrlUtil} from "./ra-url-util";
 import {AppConstant} from "../app/app-constant";
+import RaStaticHolder from "../artifacts/ra-static-holder";
 
 
 export default class RaViewComponent extends Component {
@@ -45,13 +46,16 @@ export default class RaViewComponent extends Component {
             systemSnackBarVariant: "success",
             systemSnackBarMessage: "Empty Message",
             formData: {},
+            formEditData: {},
             formError: {},
         };
     }
 
-    goToUrl = (url, event) =>{
-        event.preventDefault();
-        this.props.route.history.push(url)
+    goToUrl = (url, event, state) => {
+        if (event) {
+            event.preventDefault();
+        }
+        this.props.route.history.push(url, state)
     };
 
     getValueFromParams(key){
@@ -67,12 +71,27 @@ export default class RaViewComponent extends Component {
         this.state.formData[name] = value;
     };
 
-    processFormResponse = (response, successRedirect, failedRedirect) =>{
-        event.preventDefault();
-        if (response.isSuccess){
+    showFlashMessage(){
+        if (RaStaticHolder.message.message){
+            if (RaStaticHolder.message){
+                this.showSuccessInfo(RaStaticHolder.message.message)
+            }else{
+                this.showErrorInfo(RaStaticHolder.message.message)
+            }
+        }
+    }
 
+    processFormResponse = (response, successRedirectUrl, successMessage, failedRedirectUrl, failedMessage) =>{
+        if (response.isSuccess){
+            if (successRedirectUrl){
+                RaStaticHolder.addMessageData(successMessage ? successMessage : response.message);
+                this.goToUrl(successRedirectUrl);
+            }
         }else{
-            if (response.errorDetails){
+            if (failedRedirectUrl){
+                RaStaticHolder.addMessageData(failedMessage ? failedMessage : response.message);
+                this.goToUrl(failedRedirectUrl)
+            }else if (response.errorDetails){
                 response.errorDetails.forEach((data, key) => {
                     if (data.fieldName){
                         this.state.formError[data.fieldName] = {};
@@ -81,7 +100,7 @@ export default class RaViewComponent extends Component {
                     }
                 });
             } else if (response.message){
-                this.showErrorInfo(message)
+                this.showErrorInfo(response.message)
             }
         }
     };
@@ -94,9 +113,9 @@ export default class RaViewComponent extends Component {
     }
 
     isInputValue(fieldName){
-        // if (this.state.formData && this.state.formData[fieldName]){
-        //     return this.state.formData[fieldName]
-        // }
+        if (this.state.formEditData && this.state.formEditData[fieldName]){
+            return this.state.formEditData[fieldName]
+        }
     }
 
     isInputErrorMessage(fieldName){
