@@ -45,6 +45,7 @@ export default class RaViewComponent extends Component {
             systemSnackBarVariant: "success",
             systemSnackBarMessage: "Empty Message",
             formData: {},
+            formError: {},
         };
     }
 
@@ -64,6 +65,22 @@ export default class RaViewComponent extends Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
         this.state.formData[name] = value;
+    };
+
+    processFormResponse = (response, successRedirect, failedRedirect) =>{
+        event.preventDefault();
+        if (response.isSuccess){
+
+        }else{
+            if (response.errorDetails){
+                response.errorDetails.map((data, key) => {
+                    this.state.formError[data.fieldName].isError = true;
+                    this.state.formError[data.fieldName].message = data.message;
+                });
+            } else if (response.message){
+                this.showErrorInfo(message)
+            }
+        }
     };
 
     callToApiByAxios(dataSet, success, failed){

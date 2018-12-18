@@ -5,6 +5,10 @@ import {
     Select,MenuItem, FormControlLabel, Checkbox, FormGroup, FormLabel,RadioGroup,
     Card, CardContent, CardActions, CardHeader, Grid, withStyles
 } from '@material-ui/core'
+import {ApiURL} from "../../app/api-url";
+import {AuthenticationService} from "../../services/authentication-service";
+import {RaUrlUtil} from "../../artifacts/ra-url-util";
+import {AppConstant} from "../../app/app-constant";
 
 
 const styles = theme => ({
@@ -39,16 +43,36 @@ class UserCreateUpdateView extends RaViewComponent {
         this.state = {
             edit: false,
             formData: {},
+            formError: {},
         };
     }
 
 
     formSubmitHandler = event => {
         event.preventDefault();
-        const {name, value} = event.target;
-        console.log(this.state.formData)
+        let formData = this.state.formData;
+        this.postJsonToApi(ApiURL.UserCreate, formData,
+            success => {
+            this.processFormResponse(success.data);
+                let response = success.data;
+                console.log(response)
+            }
+        )
     };
 
+    isError(fieldName){
+       if (this.state.formError[fieldName] && this.state.formError[fieldName].isError){
+           return this.state.formError[fieldName].isError
+       }
+       return false
+    }
+
+    isErrorMessage(fieldName){
+        if (this.state.formError[fieldName] && this.state.formError[fieldName].message){
+            return this.state.formError[fieldName].message
+        }
+        return ""
+    }
 
     appRender() {
         const registrationForm = (
@@ -57,9 +81,9 @@ class UserCreateUpdateView extends RaViewComponent {
                     <CardHeader title="Create User"/>
                     <CardContent>
                         <Grid container spacing={8}>
-                            <Grid item xs={6}><TextField label="First name" name="firstName" value={this.state.firstName} onChange={this.handleFormChange} error={false} helperText="" fullWidth/></Grid>
-                            <Grid item xs={6}><TextField label="Last name" name="lastName" value={this.state.lastName} onChange={this.handleFormChange} fullWidth/></Grid>
-                            <Grid item xs={6}><TextField label="Email" type="email" name="email" value={this.state.email} onChange={this.handleFormChange} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="First name" name="firstName" value={this.state.formData.firstName} onChange={this.handleFormChange} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="Last name" name="lastName" value={this.state.formData.lastName} onChange={this.handleFormChange} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="Email" type="email" name="email" error={this.isError("firstName")} helperText={this.isErrorMessage("firstName")} value={this.state.formData.email} onChange={this.handleFormChange} fullWidth/></Grid>
                             {!this.state.edit? <Grid item xs={6}><TextField label="Password" type="password" name="password" onChange={this.handleFormChange} fullWidth/></Grid> : ''}
                         </Grid>
                     </CardContent>
