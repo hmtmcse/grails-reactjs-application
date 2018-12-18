@@ -73,15 +73,39 @@ export default class RaViewComponent extends Component {
 
         }else{
             if (response.errorDetails){
-                response.errorDetails.map((data, key) => {
-                    this.state.formError[data.fieldName].isError = true;
-                    this.state.formError[data.fieldName].message = data.message;
+                response.errorDetails.forEach((data, key) => {
+                    if (data.fieldName){
+                        this.state.formError[data.fieldName] = {};
+                        this.state.formError[data.fieldName].isError = true;
+                        this.state.formError[data.fieldName].message = data.message;
+                    }
                 });
             } else if (response.message){
                 this.showErrorInfo(message)
             }
         }
     };
+
+    isInputError(fieldName){
+        if (this.state.formError[fieldName] && this.state.formError[fieldName].isError){
+            return this.state.formError[fieldName].isError
+        }
+        return false
+    }
+
+    isInputValue(fieldName){
+        if (this.state.formData && this.state.formData[fieldName]){
+            return this.state.formData[fieldName]
+        }
+        return ""
+    }
+
+    isInputErrorMessage(fieldName){
+        if (this.state.formError[fieldName] && this.state.formError[fieldName].message){
+            return this.state.formError[fieldName].message
+        }
+        return ""
+    }
 
     callToApiByAxios(dataSet, success, failed){
         this.showProgressbar();
@@ -93,7 +117,7 @@ export default class RaViewComponent extends Component {
                 success(response);
             }
         }).catch((error) => {
-            if (error.response.status === 401){
+            if (error.response && error.response.status === 401){
                 AuthenticationService.logout();
             }else if (failed !== undefined){
                 failed(error);

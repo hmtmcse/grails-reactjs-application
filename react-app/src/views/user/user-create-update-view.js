@@ -60,19 +60,7 @@ class UserCreateUpdateView extends RaViewComponent {
         )
     };
 
-    isError(fieldName){
-       if (this.state.formError[fieldName] && this.state.formError[fieldName].isError){
-           return this.state.formError[fieldName].isError
-       }
-       return false
-    }
 
-    isErrorMessage(fieldName){
-        if (this.state.formError[fieldName] && this.state.formError[fieldName].message){
-            return this.state.formError[fieldName].message
-        }
-        return ""
-    }
 
     appRender() {
         const registrationForm = (
@@ -81,10 +69,10 @@ class UserCreateUpdateView extends RaViewComponent {
                     <CardHeader title="Create User"/>
                     <CardContent>
                         <Grid container spacing={8}>
-                            <Grid item xs={6}><TextField label="First name" name="firstName" value={this.state.formData.firstName} onChange={this.handleFormChange} fullWidth/></Grid>
-                            <Grid item xs={6}><TextField label="Last name" name="lastName" value={this.state.formData.lastName} onChange={this.handleFormChange} fullWidth/></Grid>
-                            <Grid item xs={6}><TextField label="Email" type="email" name="email" error={this.isError("firstName")} helperText={this.isErrorMessage("firstName")} value={this.state.formData.email} onChange={this.handleFormChange} fullWidth/></Grid>
-                            {!this.state.edit? <Grid item xs={6}><TextField label="Password" type="password" name="password" onChange={this.handleFormChange} fullWidth/></Grid> : ''}
+                            <Grid item xs={6}><TextField label="First name" name="firstName" error={this.isInputError("firstName")} helperText={this.isInputError("firstName")} value={this.isInputValue("firstName")} onChange={this.handleFormChange} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="Last name" name="lastName" error={this.isInputError("lastName")} helperText={this.isInputError("lastName")} value={this.isInputValue("lastName")} onChange={this.handleFormChange} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="Email" type="email" name="email" error={this.isInputError("email")} helperText={this.isInputError("email")} value={this.state.formData.email} onChange={this.handleFormChange} fullWidth/></Grid>
+                            {!this.state.edit? <Grid item xs={6}><TextField label="Password" type="password" name="password" error={this.isInputError("password")} helperText={this.isInputError("password")} onChange={this.handleFormChange} fullWidth/></Grid> : ''}
                         </Grid>
                     </CardContent>
                     <CardActions>
