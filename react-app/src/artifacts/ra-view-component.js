@@ -94,10 +94,9 @@ export default class RaViewComponent extends Component {
     }
 
     isInputValue(fieldName){
-        if (this.state.formData && this.state.formData[fieldName]){
-            return this.state.formData[fieldName]
-        }
-        return ""
+        // if (this.state.formData && this.state.formData[fieldName]){
+        //     return this.state.formData[fieldName]
+        // }
     }
 
     isInputErrorMessage(fieldName){
