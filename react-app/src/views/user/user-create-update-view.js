@@ -65,10 +65,10 @@ class UserCreateUpdateView extends RaViewComponent {
                     <CardHeader title="Create User"/>
                     <CardContent>
                         <Grid container spacing={8}>
-                            <Grid item xs={6}><TextField label="First name" name="firstName" error={this.isInputError("firstName")} helperText={this.isInputErrorMessage("firstName")} value={this.isInputValue("firstName")} onChange={this.handleFormChange} fullWidth/></Grid>
-                            <Grid item xs={6}><TextField label="Last name" name="lastName" error={this.isInputError("lastName")} helperText={this.isInputErrorMessage("lastName")} value={this.isInputValue("lastName")} onChange={this.handleFormChange} fullWidth/></Grid>
-                            <Grid item xs={6}><TextField label="Email" type="email" name="email" error={this.isInputError("email")} helperText={this.isInputErrorMessage("email")}  onChange={this.handleFormChange} fullWidth/></Grid>
-                            {!this.state.edit? <Grid item xs={6}><TextField label="Password" type="password" name="password" error={this.isInputError("password")} helperText={this.isInputErrorMessage("password")} onChange={this.handleFormChange} fullWidth/></Grid> : ''}
+                            <Grid item xs={6}><TextField label="First name" name="firstName" {...this.onChangeInputProcessor("firstName")}  value={this.isInputValue("firstName")} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="Last name" name="lastName"  value={this.isInputValue("lastName")} {...this.onChangeInputProcessor("lastName")} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="Email" type="email" name="email" {...this.onChangeInputProcessor("email")} value={this.isInputValue("email")} fullWidth/></Grid>
+                            {!this.state.edit? <Grid item xs={6}><TextField label="Password" type="password" name="password" {...this.onChangeInputProcessor("password")} fullWidth/></Grid> : ''}
                         </Grid>
                     </CardContent>
                     <CardActions>

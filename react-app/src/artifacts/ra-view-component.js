@@ -63,13 +63,48 @@ export default class RaViewComponent extends Component {
     }
 
 
-    handleFormChange = event =>{
-        event.preventDefault();
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        this.state.formData[name] = value;
-    };
+    isInputValue(fieldName){
+        if (this.state.formEditData && this.state.formEditData[fieldName]){
+            return this.state.formEditData[fieldName]
+        }
+    }
+
+     _isInputErrorMessage(fieldName){
+        if (this.state.formError[fieldName] && this.state.formError[fieldName].message){
+            return this.state.formError[fieldName].message
+        }
+        return ""
+    }
+
+    _isInputError(fieldName){
+        if (this.state.formError[fieldName] && this.state.formError[fieldName].isError){
+            return this.state.formError[fieldName].isError
+        }
+        return false
+    }
+
+    onChangeInputProcessor(fieldName) {
+        return {
+            error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false,
+            helperText: this.state.formError[fieldName] !== undefined ? this._isInputErrorMessage(fieldName) : "",
+            onChange: (event) => {
+                event.preventDefault();
+                const target = event.target;
+                const value = target.type === 'checkbox' ? target.checked : target.value;
+                const name = target.name;
+                if (this.state.formData !== undefined) {
+                    this.state.formData[name] = value;
+                }
+                this.setState((state) => {
+                    let formError = {...state.formError};
+                    if (formError[fieldName] !== undefined){
+                        delete formError[fieldName];
+                    }
+                    return {formError: formError};
+                });
+            }
+        }
+    }
 
     showFlashMessage(){
         if (RaStaticHolder.message.message){
@@ -105,25 +140,6 @@ export default class RaViewComponent extends Component {
         }
     };
 
-    isInputError(fieldName){
-        if (this.state.formError[fieldName] && this.state.formError[fieldName].isError){
-            return this.state.formError[fieldName].isError
-        }
-        return false
-    }
-
-    isInputValue(fieldName){
-        if (this.state.formEditData && this.state.formEditData[fieldName]){
-            return this.state.formEditData[fieldName]
-        }
-    }
-
-    isInputErrorMessage(fieldName){
-        if (this.state.formError[fieldName] && this.state.formError[fieldName].message){
-            return this.state.formError[fieldName].message
-        }
-        return ""
-    }
 
     callToApiByAxios(dataSet, success, failed){
         this.showProgressbar();
