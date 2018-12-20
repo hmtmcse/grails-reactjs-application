@@ -3,8 +3,6 @@ import {RaUtil} from './ra-util';
 import RaSnackBar from './ra-snack-bar';
 import axios from 'axios';
 import {AuthenticationService} from "../services/authentication-service";
-import {RaUrlUtil} from "./ra-url-util";
-import {AppConstant} from "../app/app-constant";
 import RaStaticHolder from "../artifacts/ra-static-holder";
 
 
@@ -58,18 +56,18 @@ export default class RaViewComponent extends Component {
         this.props.route.history.push(url, state)
     };
 
-    getValueFromParams(key){
-      return this.props.route.match.params[key];
+    getValueFromParams(key) {
+        return this.props.route.match.params[key];
     }
 
 
-    isInputValue(fieldName){
-        if (this.state.formEditData && this.state.formEditData[fieldName]){
+    isInputValue(fieldName) {
+        if (this.state.formEditData && this.state.formEditData[fieldName]) {
             return this.state.formEditData[fieldName]
         }
     }
 
-    setInputValue(fieldName, value){
+    setInputValue(fieldName, value) {
         this.setState((state) => {
             let formEditData = {...state.formEditData};
             formEditData[fieldName] = value;
@@ -77,15 +75,15 @@ export default class RaViewComponent extends Component {
         });
     }
 
-     _isInputErrorMessage(fieldName){
-        if (this.state.formError[fieldName] && this.state.formError[fieldName].message){
+    _isInputErrorMessage(fieldName) {
+        if (this.state.formError[fieldName] && this.state.formError[fieldName].message) {
             return this.state.formError[fieldName].message
         }
         return ""
     }
 
-    _isInputError(fieldName){
-        if (this.state.formError[fieldName] && this.state.formError[fieldName].isError){
+    _isInputError(fieldName) {
+        if (this.state.formError[fieldName] && this.state.formError[fieldName].isError) {
             return this.state.formError[fieldName].isError
         }
         return false
@@ -95,7 +93,7 @@ export default class RaViewComponent extends Component {
         return {
             error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false,
             name: fieldName,
-            value:  this.state.formEditData[fieldName] !== undefined ? this.isInputValue(fieldName) : undefined,
+            value: this.state.formEditData[fieldName] !== undefined ? this.isInputValue(fieldName) : undefined,
             onChange: (event) => {
                 event.preventDefault();
                 const target = event.target;
@@ -106,28 +104,28 @@ export default class RaViewComponent extends Component {
                 }
                 this.setState((state) => {
                     let formError = {...state.formError};
-                    if (formError[fieldName] !== undefined){
+                    if (formError[fieldName] !== undefined) {
                         delete formError[fieldName];
                     }
                     return {formError: formError};
                 });
-                if (onChangeCallBack !== undefined){
+                if (onChangeCallBack !== undefined) {
                     onChangeCallBack(event, fieldName, value);
                 }
             }
         }
     }
 
-    onChangeTextFieldProcessor(fieldName, onChangeCallBack){
+    onChangeTextFieldProcessor(fieldName, onChangeCallBack) {
         let onChangeData = this._onChangeInputProcessor(fieldName, onChangeCallBack);
         onChangeData.helperText = this.state.formError[fieldName] !== undefined ? this._isInputErrorMessage(fieldName) : "";
         return onChangeData;
     }
 
-    onChangeSelectProcessor(fieldName, onChangeCallBack){
+    onChangeSelectProcessor(fieldName, onChangeCallBack) {
         let onChangeSelectCallBack = (event, fieldName, fieldValue) => {
             this.setInputValue(fieldName, fieldValue);
-            if (onChangeCallBack !== undefined){
+            if (onChangeCallBack !== undefined) {
                 onChangeCallBack(event, fieldName);
             }
         };
@@ -135,69 +133,69 @@ export default class RaViewComponent extends Component {
         return onChangeData;
     }
 
-    helpTextErrorMessageProcessor(fieldName){
+    helpTextErrorMessageProcessor(fieldName) {
         return {
             error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false,
             children: this.state.formError[fieldName] !== undefined ? this._isInputErrorMessage(fieldName) : "",
         }
     }
 
-    formControlErrorMessageProcessor(fieldName){
+    formControlErrorMessageProcessor(fieldName) {
         return {
             error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false
         }
     }
 
-    showFlashMessage(){
-        if (RaStaticHolder.message.message){
-            if (RaStaticHolder.message){
+    showFlashMessage() {
+        if (RaStaticHolder.message.message) {
+            if (RaStaticHolder.message) {
                 this.showSuccessInfo(RaStaticHolder.message.message)
-            }else{
+            } else {
                 this.showErrorInfo(RaStaticHolder.message.message)
             }
         }
     }
 
-    processFormResponse = (response, successRedirectUrl, successMessage, failedRedirectUrl, failedMessage) =>{
-        if (response.isSuccess){
-            if (successRedirectUrl){
+    processFormResponse = (response, successRedirectUrl, successMessage, failedRedirectUrl, failedMessage) => {
+        if (response.isSuccess) {
+            if (successRedirectUrl) {
                 RaStaticHolder.addMessageData(successMessage ? successMessage : response.message);
                 this.goToUrl(successRedirectUrl);
             }
-        }else{
-            if (failedRedirectUrl){
+        } else {
+            if (failedRedirectUrl) {
                 RaStaticHolder.addMessageData(failedMessage ? failedMessage : response.message);
                 this.goToUrl(failedRedirectUrl)
-            }else if (response.errorDetails){
+            } else if (response.errorDetails) {
                 response.errorDetails.forEach((data, key) => {
-                    if (data.fieldName){
+                    if (data.fieldName) {
                         this.state.formError[data.fieldName] = {};
                         this.state.formError[data.fieldName].isError = true;
                         this.state.formError[data.fieldName].message = data.message;
                     }
                 });
-            } else if (response.message){
+            } else if (response.message) {
                 this.showErrorInfo(response.message)
             }
         }
     };
 
 
-    callToApiByAxios(dataSet, success, failed){
+    callToApiByAxios(dataSet, success, failed) {
         this.showProgressbar();
-        if (dataSet !== undefined && dataSet.url !== undefined){
+        if (dataSet !== undefined && dataSet.url !== undefined) {
             dataSet.url = GRA.baseURL + dataSet.url
         }
         axios(dataSet).then((response) => {
-            if (success !== undefined){
+            if (success !== undefined) {
                 success(response);
             }
         }).catch((error) => {
-            if (error.response && error.response.status === 401){
+            if (error.response && error.response.status === 401) {
                 AuthenticationService.logout();
-            }else if (failed !== undefined){
+            } else if (failed !== undefined) {
                 failed(error);
-            }else{
+            } else {
                 this.showErrorInfo(error.message);
             }
         }).then(() => {
@@ -220,7 +218,7 @@ export default class RaViewComponent extends Component {
             method: 'post',
             url: url,
             data: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
+            headers: {'Content-Type': 'application/json'}
         };
         this.callToApiByAxios(dataSet, success, failed);
     }
@@ -260,8 +258,9 @@ export default class RaViewComponent extends Component {
         return (
             <React.Fragment>
                 {RaUtil.showLoader(this.state.isSystemProgressBarEnabled)}
-                <RaSnackBar variant={this.state.systemSnackBarVariant ? this.state.systemSnackBarVariant : "error"} isOpen={this.state.showSystemSnackBar}
-                             message={this.state.systemSnackBarMessage} onClose={this.closeSnackBar}/>
+                <RaSnackBar variant={this.state.systemSnackBarVariant ? this.state.systemSnackBarVariant : "error"}
+                            isOpen={this.state.showSystemSnackBar}
+                            message={this.state.systemSnackBarMessage} onClose={this.closeSnackBar}/>
                 {this.appRender()}
             </React.Fragment>
         )
