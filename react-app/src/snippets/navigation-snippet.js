@@ -7,7 +7,6 @@ import { NavLink } from "react-router-dom";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import RaViewComponent from "../artifacts/ra-view-component";
@@ -17,6 +16,7 @@ import {AuthenticationService} from "../services/authentication-service";
 import {AppConstant} from "../app/app-constant";
 import {PrivateLayoutViews} from "../app/app-url-mapping";
 import ProfileNav from "./profile-nav";
+import ProfileNavSnippet from "./profile-nav-snippet";
 
 
 class NavigationSnippet extends RaViewComponent {
@@ -37,14 +37,6 @@ class NavigationSnippet extends RaViewComponent {
     };
 
 
-    logout = event =>{
-        event.preventDefault();
-        this.getToApi(ApiURL.Logout, response => {
-            AuthenticationService.logout();
-        });
-    };
-
-
     appRender(){
         const { classes } = this.props;
         return (
@@ -60,13 +52,8 @@ class NavigationSnippet extends RaViewComponent {
                         <Typography variant="title" color="inherit" noWrap className={classes.title}>
                             {AppConstant.appName}
                         </Typography>
-
-
-
-                        <IconButton color="inherit">
-                            <ExitToApp onClick={this.logout}/>
-                        </IconButton>
                         <ProfileNav/>
+                        <ProfileNavSnippet/>
                     </Toolbar>
                 </AppBar>
                 <Drawer variant="permanent" classes={{paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose)}}>

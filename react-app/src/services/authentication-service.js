@@ -13,8 +13,10 @@ const login = (loginData) => {
 
 
 const logout = () => {
+    RaHttpUtil.getRequest(ApiURL.BaseURL + ApiURL.Logout, success =>{
+        RaUrlUtil.redirectTo(AppConstant.loginUrl);
+    });
     RaBrowserStorage.clearSession();
-    RaUrlUtil.redirectTo(AppConstant.loginUrl);
 };
 
 const isAuthenticated = () => {

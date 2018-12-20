@@ -1,16 +1,11 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import {
-    ListItemIcon, ListItemText, FormControl, InputLabel, Radio,
-    Select,MenuItem, FormHelperText, Checkbox, FormGroup, FormLabel,RadioGroup,
-    Card, CardContent, CardActions, CardHeader, Grid
+    ListItemIcon,MenuItem
 } from '@material-ui/core';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Avatar from '@material-ui/core/Avatar';
 
 const options = [
     'None',
