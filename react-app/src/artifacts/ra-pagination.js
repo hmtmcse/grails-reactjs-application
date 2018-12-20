@@ -7,10 +7,6 @@ import {AppConstant} from "../app/app-constant";
 
 export default class RaPagination extends RaViewComponent {
 
-
-
-
-
     handleChangePage = (event, page) => {
         console.log("handleChangePage " +page)
     };
@@ -20,7 +16,6 @@ export default class RaPagination extends RaViewComponent {
     };
 
     render() {
-
         const {total} = this.props;
         let rowsPerPage = this.props.rowsPerPage ? this.props.rowsPerPage : AppConstant.rowsPerPage;
         let offset = this.props.offset ? this.props.offset : AppConstant.defaultOffset;
