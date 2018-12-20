@@ -4,6 +4,8 @@ import RaSnackBar from './ra-snack-bar';
 import axios from 'axios';
 import {AuthenticationService} from "../services/authentication-service";
 import RaStaticHolder from "../artifacts/ra-static-holder";
+import {AppConstant} from "../app/app-constant";
+import {ApiURL} from "../app/api-url";
 
 
 export default class RaViewComponent extends Component {
@@ -184,7 +186,7 @@ export default class RaViewComponent extends Component {
     callToApiByAxios(dataSet, success, failed) {
         this.showProgressbar();
         if (dataSet !== undefined && dataSet.url !== undefined) {
-            dataSet.url = GRA.baseURL + dataSet.url
+            dataSet.url = ApiURL.BaseURL + dataSet.url
         }
         axios(dataSet).then((response) => {
             if (success !== undefined) {

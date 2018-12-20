@@ -43,4 +43,16 @@ class AuthenticationDefinitionService {
         return gsApiActionDefinition
     }
 
+    GsApiActionDefinition isSessionExist() {
+        GsApiActionDefinition gsApiActionDefinition = new GsApiActionDefinition<User>(User)
+        gsApiActionDefinition.customProcessor = new CustomProcessor() {
+            @Override
+            GsApiResponseData process(GsApiActionDefinition actionDefinition, GsParamsPairData paramData, ApiHelper apiHelper) {
+                return GsApiResponseData.successMessage("Session Exists")
+            }
+        }
+        gsApiActionDefinition.failedResponseFormat = GsApiResponseData.failed("Session Expired!!")
+        return gsApiActionDefinition
+    }
+
 }

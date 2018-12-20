@@ -14,4 +14,8 @@ class ApiAuthenticationV1Controller extends GsRestProcessor {
     def getLogout() {
         return customProcessor(authenticationDefinitionService.logout())
     }
+
+    def getIsSessionExist() {
+        return customProcessor(authenticationDefinitionService.isSessionExist())
+    }
 }

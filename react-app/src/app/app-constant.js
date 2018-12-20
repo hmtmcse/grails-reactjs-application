@@ -1,4 +1,5 @@
 export const AppConstant = {
+    USER_AUTH_INFO: "USER_AUTH_INFO",
     appName: "HMTMCSE",
     navName: "Navigation",
     loginLabel: "Grails ReactJs Application",

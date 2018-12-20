@@ -3,6 +3,7 @@ export const ApiURL = {
 
     UserLogin: "api/v1/authentication/login",
     Logout: "api/v1/authentication/logout",
+    isSessionExist: "api/v1/authentication/isSessionExist",
 
 
 
