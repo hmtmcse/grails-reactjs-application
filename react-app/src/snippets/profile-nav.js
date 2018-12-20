@@ -40,7 +40,7 @@ class ProfileNav extends React.Component {
 
         return (
             <div>
-                <AccountCircle src="/assets/logo.png"
+                <AccountCircle
                     onClick={this.handleClick}>
                     <MoreVertIcon />
                 </AccountCircle >
