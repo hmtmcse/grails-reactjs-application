@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import AccountCircle from "@material-ui/core/SvgIcon/SvgIcon";
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu from "@material-ui/core/Menu";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {
     ListItemIcon, MenuItem
 } from '@material-ui/core';
 import ExitToApp from '@material-ui/icons/ExitToApp';
-import {ApiURL} from "../app/api-url";
 import {AuthenticationService} from "../services/authentication-service";
 
 

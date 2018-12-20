@@ -1,21 +1,17 @@
 import React from 'react'
 import {
-    AppBar, Badge, Divider, Drawer, IconButton,
+    AppBar, Divider, Drawer, IconButton,
     Icon, ListItemIcon, ListItemText, MenuItem, MenuList, Toolbar, Typography, withStyles
 } from '@material-ui/core';
 import { NavLink } from "react-router-dom";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExitToApp from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import RaViewComponent from "../artifacts/ra-view-component";
-import {ApiURL} from "../app/api-url";
 import {navigationSnippetJSS} from "../assets/jss/navigation-snippet-jss";
-import {AuthenticationService} from "../services/authentication-service";
 import {AppConstant} from "../app/app-constant";
 import {PrivateLayoutViews} from "../app/app-url-mapping";
-import ProfileNav from "./profile-nav";
 import ProfileNavSnippet from "./profile-nav-snippet";
 
 
@@ -52,7 +48,6 @@ class NavigationSnippet extends RaViewComponent {
                         <Typography variant="title" color="inherit" noWrap className={classes.title}>
                             {AppConstant.appName}
                         </Typography>
-                        <ProfileNav/>
                         <ProfileNavSnippet/>
                     </Toolbar>
                 </AppBar>
