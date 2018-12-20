@@ -9,6 +9,7 @@ import {withStyles} from '@material-ui/core/styles';
 import RaTableHeader from './../../artifacts/ra-table-header';
 import RaPagination from './../../artifacts/ra-pagination';
 import UserCreateUpdateView from './user-create-update-view';
+import LongMenu from "./long-menu";
 
 
 export const UserOtherUrls = [
@@ -117,7 +118,7 @@ class UserMainView extends RaViewComponent {
                                     <TableRow key={key}>
                                         <TableCell>{user.firstName} {user.lastName}</TableCell>
                                         <TableCell>{user.email}</TableCell>
-                                        <TableCell>Action</TableCell>
+                                        <TableCell numeric><LongMenu/></TableCell>
                                     </TableRow>
                                 )
                             })}

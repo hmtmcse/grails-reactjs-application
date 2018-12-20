@@ -16,6 +16,7 @@ import {navigationSnippetJSS} from "../assets/jss/navigation-snippet-jss";
 import {AuthenticationService} from "../services/authentication-service";
 import {AppConstant} from "../app/app-constant";
 import {PrivateLayoutViews} from "../app/app-url-mapping";
+import ProfileNav from "./profile-nav";
 
 
 class NavigationSnippet extends RaViewComponent {
@@ -59,14 +60,13 @@ class NavigationSnippet extends RaViewComponent {
                         <Typography variant="title" color="inherit" noWrap className={classes.title}>
                             {AppConstant.appName}
                         </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon/>
-                            </Badge>
-                        </IconButton>
+
+
+
                         <IconButton color="inherit">
                             <ExitToApp onClick={this.logout}/>
                         </IconButton>
+                        <ProfileNav/>
                     </Toolbar>
                 </AppBar>
                 <Drawer variant="permanent" classes={{paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose)}}>
