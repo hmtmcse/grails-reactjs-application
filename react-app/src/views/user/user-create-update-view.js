@@ -65,10 +65,10 @@ class UserCreateUpdateView extends RaViewComponent {
                     <CardHeader title="Create User"/>
                     <CardContent>
                         <Grid container spacing={8}>
-                            <Grid item xs={6}><TextField label="First name" name="firstName" {...this.onChangeInputProcessor("firstName")}  value={this.isInputValue("firstName")} fullWidth/></Grid>
-                            <Grid item xs={6}><TextField label="Last name" name="lastName"  value={this.isInputValue("lastName")} {...this.onChangeInputProcessor("lastName")} fullWidth/></Grid>
-                            <Grid item xs={6}><TextField label="Email" type="email" name="email" {...this.onChangeInputProcessor("email")} value={this.isInputValue("email")} fullWidth/></Grid>
-                            {!this.state.edit? <Grid item xs={6}><TextField label="Password" type="password" name="password" {...this.onChangeInputProcessor("password")} fullWidth/></Grid> : ''}
+                            <Grid item xs={6}><TextField label="First name" {...this.onChangeTextFieldProcessor("firstName")} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="Last name"  {...this.onChangeTextFieldProcessor("lastName")} fullWidth/></Grid>
+                            <Grid item xs={6}><TextField label="Email" type="email" {...this.onChangeTextFieldProcessor("email")} fullWidth/></Grid>
+                            {!this.state.edit? <Grid item xs={6}><TextField label="Password" type="password"{...this.onChangeTextFieldProcessor("password")} fullWidth/></Grid> : ''}
                         </Grid>
                     </CardContent>
                     <CardActions>

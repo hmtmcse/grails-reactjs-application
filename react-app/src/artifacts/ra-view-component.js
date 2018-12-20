@@ -83,10 +83,11 @@ export default class RaViewComponent extends Component {
         return false
     }
 
-    onChangeInputProcessor(fieldName) {
+    _onChangeInputProcessor(fieldName, onChangeCallBack) {
         return {
             error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false,
-            helperText: this.state.formError[fieldName] !== undefined ? this._isInputErrorMessage(fieldName) : "",
+            name: fieldName,
+            value: this.isInputValue(fieldName),
             onChange: (event) => {
                 event.preventDefault();
                 const target = event.target;
@@ -102,8 +103,17 @@ export default class RaViewComponent extends Component {
                     }
                     return {formError: formError};
                 });
+                if (onChangeCallBack !== undefined){
+                    onChangeCallBack(event, fieldName);
+                }
             }
         }
+    }
+
+    onChangeTextFieldProcessor(fieldName, onChangeCallBack){
+        let onChangeData = this._onChangeInputProcessor(fieldName, onChangeCallBack);
+        onChangeData.helperText = this.state.formError[fieldName] !== undefined ? this._isInputErrorMessage(fieldName) : "";
+        return onChangeData;
     }
 
     showFlashMessage(){
