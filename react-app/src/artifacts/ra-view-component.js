@@ -69,6 +69,14 @@ export default class RaViewComponent extends Component {
         }
     }
 
+    setInputValue(fieldName, value){
+        this.setState((state) => {
+            let formEditData = {...state.formEditData};
+            formEditData[fieldName] = value;
+            return {formEditData: formEditData};
+        });
+    }
+
      _isInputErrorMessage(fieldName){
         if (this.state.formError[fieldName] && this.state.formError[fieldName].message){
             return this.state.formError[fieldName].message
@@ -87,7 +95,7 @@ export default class RaViewComponent extends Component {
         return {
             error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false,
             name: fieldName,
-            value: this.isInputValue(fieldName),
+            value:  this.state.formEditData[fieldName] !== undefined ? this.isInputValue(fieldName) : undefined,
             onChange: (event) => {
                 event.preventDefault();
                 const target = event.target;
@@ -104,7 +112,7 @@ export default class RaViewComponent extends Component {
                     return {formError: formError};
                 });
                 if (onChangeCallBack !== undefined){
-                    onChangeCallBack(event, fieldName);
+                    onChangeCallBack(event, fieldName, value);
                 }
             }
         }
@@ -114,6 +122,30 @@ export default class RaViewComponent extends Component {
         let onChangeData = this._onChangeInputProcessor(fieldName, onChangeCallBack);
         onChangeData.helperText = this.state.formError[fieldName] !== undefined ? this._isInputErrorMessage(fieldName) : "";
         return onChangeData;
+    }
+
+    onChangeSelectProcessor(fieldName, onChangeCallBack){
+        let onChangeSelectCallBack = (event, fieldName, fieldValue) => {
+            this.setInputValue(fieldName, fieldValue);
+            if (onChangeCallBack !== undefined){
+                onChangeCallBack(event, fieldName);
+            }
+        };
+        let onChangeData = this._onChangeInputProcessor(fieldName, onChangeSelectCallBack);
+        return onChangeData;
+    }
+
+    helpTextErrorMessageProcessor(fieldName){
+        return {
+            error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false,
+            children: this.state.formError[fieldName] !== undefined ? this._isInputErrorMessage(fieldName) : "",
+        }
+    }
+
+    formControlErrorMessageProcessor(fieldName){
+        return {
+            error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false
+        }
     }
 
     showFlashMessage(){

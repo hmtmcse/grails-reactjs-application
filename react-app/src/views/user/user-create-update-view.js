@@ -2,7 +2,7 @@ import RaViewComponent from "../../artifacts/ra-view-component";
 import React from "react";
 import {
     Button, TextField, FormControl, InputLabel, Radio,
-    Select,MenuItem, FormControlLabel, Checkbox, FormGroup, FormLabel,RadioGroup,
+    Select,MenuItem, FormHelperText, Checkbox, FormGroup, FormLabel,RadioGroup,
     Card, CardContent, CardActions, CardHeader, Grid, withStyles
 } from '@material-ui/core'
 import {ApiURL} from "../../app/api-url";
@@ -42,6 +42,9 @@ class UserCreateUpdateView extends RaViewComponent {
             edit: false,
             formData: {},
             formError: {},
+            formEditData: {
+                xyz : "bangladesh"
+            },
         };
     }
 
@@ -69,6 +72,17 @@ class UserCreateUpdateView extends RaViewComponent {
                             <Grid item xs={6}><TextField label="Last name"  {...this.onChangeTextFieldProcessor("lastName")} fullWidth/></Grid>
                             <Grid item xs={6}><TextField label="Email" type="email" {...this.onChangeTextFieldProcessor("email")} fullWidth/></Grid>
                             {!this.state.edit? <Grid item xs={6}><TextField label="Password" type="password"{...this.onChangeTextFieldProcessor("password")} fullWidth/></Grid> : ''}
+                            <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                    <InputLabel>Country</InputLabel>
+                                    <Select {...this.onChangeSelectProcessor("xyz")}>
+                                        <MenuItem value="bangladesh">Bangladesh</MenuItem>
+                                        <MenuItem value="australia">Australia</MenuItem>
+                                        <MenuItem value="usa">USA</MenuItem>
+                                    </Select>
+                                    <FormHelperText {...this.helpTextErrorMessageProcessor("xyz")}/>
+                                </FormControl>
+                            </Grid>
                         </Grid>
                     </CardContent>
                     <CardActions>
