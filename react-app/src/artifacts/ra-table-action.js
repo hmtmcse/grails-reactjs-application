@@ -9,6 +9,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import ErrorIcon from '@material-ui/icons/Error';
 import ListIcon from '@material-ui/icons/List';
 import _ from 'lodash';
+import RaAlertDialog from "./ra-alert-dialog";
 
 
 export default class RaTableAction extends Component {
@@ -19,6 +20,8 @@ export default class RaTableAction extends Component {
 
     state = {
         anchorEl: null,
+        showConfirmationDialog: false,
+        confirmDialogConfig: {},
     };
 
     handleClick = event => {
@@ -29,8 +32,31 @@ export default class RaTableAction extends Component {
         this.setState({anchorEl: null});
     };
 
-    confirmationHandler = (event, additionalInformation) => {
-
+    confirmationHandler = (event, actionDefinition) => {
+        if (actionDefinition.confirmation) {
+            let confirmation = actionDefinition.confirmation;
+            this.state.confirmDialogConfig = {
+                title: confirmation.title,
+                okayLabel: confirmation.okayLabel,
+                cancelLabel: confirmation.cancelLabel,
+                message: confirmation.message,
+                okayFunction: event => {
+                    if (confirmation.okayFunction) {
+                        confirmation.okayFunction(event, actionDefinition.additionalInformation);
+                    } else if (actionDefinition.action) {
+                        actionDefinition.action(event, actionDefinition.additionalInformation);
+                    }
+                    this.setState({showConfirmationDialog: false})
+                },
+                cancelFunction: event => {
+                    if (confirmation.cancelFunction) {
+                        confirmation.cancelFunction(event, actionDefinition.additionalInformation);
+                    }
+                    this.setState({showConfirmationDialog: false})
+                }
+            };
+            this.setState({showConfirmationDialog: true});
+        }
     };
 
     render() {
@@ -61,7 +87,7 @@ export default class RaTableAction extends Component {
                             return (
                                 <MenuItem key={key} onClick={ event => {
                                     if (actionDefinition.confirmation) {
-                                        this.confirmationHandler(event, actionDefinition.additionalInformation)
+                                        this.confirmationHandler(event, actionDefinition)
                                     } else if (actionDefinition.action) {
                                         actionDefinition.action(event, actionDefinition.additionalInformation)
                                     }
@@ -76,6 +102,7 @@ export default class RaTableAction extends Component {
                         })
                     }
                 </Menu>
+                {this.state.showConfirmationDialog ? (<RaAlertDialog isOpen={this.state.showConfirmationDialog} {...this.state.confirmDialogConfig}/>): ""}
             </React.Fragment>
         );
     }
@@ -106,6 +133,7 @@ export class ActionDefinition {
 
     addConfirmation(message = undefined) {
         this.confirmation = {
+            title: "Confirm",
             message: message,
             okayLabel: "Confirm",
             okayFunction: null,
