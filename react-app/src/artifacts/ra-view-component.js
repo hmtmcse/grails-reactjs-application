@@ -95,7 +95,7 @@ export default class RaViewComponent extends Component {
         return {
             error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false,
             name: fieldName,
-            value: this.state.formData[fieldName] !== undefined ? this.isInputValue(fieldName) : undefined,
+            value: this.state.formData[fieldName] !== undefined ? this.isInputValue(fieldName) : "",
             onChange: (event) => {
                 event.preventDefault();
                 const target = event.target;
