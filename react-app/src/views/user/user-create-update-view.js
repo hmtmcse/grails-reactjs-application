@@ -47,6 +47,18 @@ class UserCreateUpdateView extends RaViewComponent {
     }
 
 
+    componentDidMount() {
+        this.showFlashMessage();
+        let id = this.getValueFromParams("id");
+        if (id) {
+            this.setState({edit: true})
+            this.showFlashMessage();
+            this.getToApi("api/v1/user/details?propertyName=id&propertyValue=" + id, response => {
+                this.setState({formEditData: response.data.response})
+            });
+        }
+    }
+
     formSubmitHandler = event => {
         event.preventDefault();
         let formData = this.state.formData;
@@ -61,7 +73,7 @@ class UserCreateUpdateView extends RaViewComponent {
 
     appRender() {
         const registrationForm = (
-            <form onSubmit={this.formSubmitHandler}>
+            <form onSubmit={this.formSubmitHandler} >
                 <Card>
                     <CardHeader title="Create User"/>
                     <CardContent>

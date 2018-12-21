@@ -64,6 +64,7 @@ export default class RaViewComponent extends Component {
 
 
     isInputValue(fieldName) {
+        console.log("Lock");
         if (this.state.formEditData && this.state.formEditData[fieldName]) {
             return this.state.formEditData[fieldName]
         }

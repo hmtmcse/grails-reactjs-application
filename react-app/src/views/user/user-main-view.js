@@ -18,6 +18,12 @@ export const UserOtherUrls = [
         name: "Create Update",
         component: UserCreateUpdateView,
         isActive: true,
+    },
+    {
+        path: "/user/create-update/:id",
+        name: "Create Update",
+        component: UserCreateUpdateView,
+        isActive: true,
     }
 ];
 
@@ -71,13 +77,6 @@ class UserMainView extends RaViewComponent {
         });
     }
 
-    handleChangePage = (event, page) => {
-
-    };
-
-    handleChangeRowsPerPage = event => {
-
-    };
 
     clickOnSort = (name, row, event) => {
         const orderBy = name;
@@ -89,23 +88,27 @@ class UserMainView extends RaViewComponent {
     };
 
 
-    deleteAction = (event, additionalInformation) =>{
-        console.log("Delete " + additionalInformation);
+    deleteAction = (event, actionDefinition) =>{
+        console.log("Delete " + actionDefinition);
     };
 
-    viewAction = (event, additionalInformation) =>{
+    viewAction = (event, actionDefinition) =>{
+        let additionalInformation = actionDefinition.additionalInformation;
         console.log("View " + additionalInformation.email);
     };
 
-    editAction (event, additionalInformation){
-        console.log("Edit " + additionalInformation);
+    editAction (event, actionDefinition){
+        let additionalInformation = actionDefinition.additionalInformation;
+        console.log("Edit " + actionDefinition);
+        console.log(event);
+        actionDefinition.component.goToUrl("/user/create-update/" + additionalInformation.id)
     };
 
     appRender() {
         const {classes} = this.props;
 
         let tableActions = info =>{
-            let actions = ActionDefinition.commonActions(info);
+            let actions = ActionDefinition.commonActions(info, this);
             actions.editAction.action = this.editAction;
             actions.viewAction.action = this.viewAction;
             actions.deleteAction.action = this.deleteAction;

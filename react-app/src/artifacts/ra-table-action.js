@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
-import {ListItemIcon, MenuItem, Icon} from "@material-ui/core";
+import {ListItemIcon, MenuItem} from "@material-ui/core";
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import Visibility from '@material-ui/icons/Visibility';
@@ -42,15 +42,15 @@ export default class RaTableAction extends Component {
                 message: confirmation.message,
                 okayFunction: event => {
                     if (confirmation.okayFunction) {
-                        confirmation.okayFunction(event, actionDefinition.additionalInformation);
+                        confirmation.okayFunction(event, actionDefinition);
                     } else if (actionDefinition.action) {
-                        actionDefinition.action(event, actionDefinition.additionalInformation);
+                        actionDefinition.action(event, actionDefinition);
                     }
                     this.setState({showConfirmationDialog: false})
                 },
                 cancelFunction: event => {
                     if (confirmation.cancelFunction) {
-                        confirmation.cancelFunction(event, actionDefinition.additionalInformation);
+                        confirmation.cancelFunction(event, actionDefinition);
                     }
                     this.setState({showConfirmationDialog: false})
                 }
@@ -89,7 +89,7 @@ export default class RaTableAction extends Component {
                                     if (actionDefinition.confirmation) {
                                         this.confirmationHandler(event, actionDefinition)
                                     } else if (actionDefinition.action) {
-                                        actionDefinition.action(event, actionDefinition.additionalInformation)
+                                        actionDefinition.action(event, actionDefinition)
                                     }
                                     this.handleClose();
                                 }}>
@@ -119,6 +119,7 @@ export class ActionDefinition {
     icon = ErrorIcon;
     confirmation = undefined;
     additionalInformation = undefined;
+    component = undefined;
 
     constructor(label, action, icon) {
         this.label = label;
@@ -128,6 +129,11 @@ export class ActionDefinition {
 
     addAdditionalInfo(info){
         this.additionalInformation = info;
+        return this;
+    }
+
+    setComponent(component){
+        this.component = component;
         return this;
     }
 
@@ -143,11 +149,11 @@ export class ActionDefinition {
         return this;
     }
 
-    static commonActions(additionalInformation = undefined) {
+    static commonActions(additionalInformation = undefined, component = undefined) {
         return {
-            viewAction: ActionDefinition.instance("View", undefined, Visibility).addAdditionalInfo(additionalInformation),
-            editAction: ActionDefinition.instance("Edit", undefined, Edit).addAdditionalInfo(additionalInformation),
-            deleteAction: ActionDefinition.instance("Delete", undefined, Delete).addConfirmation("Are you sure want to Delete?").addAdditionalInfo(additionalInformation),
+            viewAction: ActionDefinition.instance("View", undefined, Visibility).addAdditionalInfo(additionalInformation).setComponent(component),
+            editAction: ActionDefinition.instance("Edit", undefined, Edit).addAdditionalInfo(additionalInformation).setComponent(component),
+            deleteAction: ActionDefinition.instance("Delete", undefined, Delete).addConfirmation("Are you sure want to Delete?").addAdditionalInfo(additionalInformation).setComponent(component),
         }
     }
 
