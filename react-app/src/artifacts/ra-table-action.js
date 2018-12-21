@@ -94,13 +94,14 @@ export class ActionDefinition {
             cancelFunction: null,
             cancelLabel: "Cancel",
         };
+        return this;
     }
 
     static commonActions() {
         return {
             viewAction: ActionDefinition.instance("View", undefined, Visibility),
             editAction: ActionDefinition.instance("Edit", undefined, Edit),
-            deleteAction: ActionDefinition.instance("Delete", undefined, Delete),
+            deleteAction: ActionDefinition.instance("Delete", undefined, Delete).addConfirmation(),
         }
     }
 
