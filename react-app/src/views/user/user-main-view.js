@@ -89,8 +89,29 @@ class UserMainView extends RaViewComponent {
     };
 
 
+    deleteAction = (event, additionalInformation) =>{
+        console.log("Delete " + additionalInformation);
+    };
+
+    viewAction = (event, additionalInformation) =>{
+        console.log("View " + additionalInformation.email);
+    };
+
+    editAction (event, additionalInformation){
+        console.log("Edit " + additionalInformation);
+    };
+
     appRender() {
         const {classes} = this.props;
+
+        let tableActions = info =>{
+            let actions = ActionDefinition.commonActions(info);
+            actions.editAction.action = this.editAction;
+            actions.viewAction.action = this.viewAction;
+            actions.deleteAction.action = this.deleteAction;
+            return actions;
+        };
+
         return (<React.Fragment>
             <Paper className={classes.mainActionArea}>
                 <div>
@@ -118,7 +139,7 @@ class UserMainView extends RaViewComponent {
                                     <TableRow key={key}>
                                         <TableCell>{user.firstName} {user.lastName}</TableCell>
                                         <TableCell>{user.email}</TableCell>
-                                        <TableCell numeric><RaTableAction tableActions={ActionDefinition.commonActions()}/></TableCell>
+                                        <TableCell numeric><RaTableAction tableActions={tableActions(user)}/></TableCell>
                                     </TableRow>
                                 )
                             })}

@@ -29,6 +29,10 @@ export default class RaTableAction extends Component {
         this.setState({anchorEl: null});
     };
 
+    confirmationHandler = (event, additionalInformation) => {
+
+    };
+
     render() {
         const {anchorEl} = this.state;
         const open = Boolean(anchorEl);
@@ -55,7 +59,14 @@ export default class RaTableAction extends Component {
                     {
                         _.map(tableActions, (actionDefinition, key) => {
                             return (
-                                <MenuItem key={key}>
+                                <MenuItem key={key} onClick={ event => {
+                                    if (actionDefinition.confirmation) {
+                                        this.confirmationHandler(event, actionDefinition.additionalInformation)
+                                    } else if (actionDefinition.action) {
+                                        actionDefinition.action(event, actionDefinition.additionalInformation)
+                                    }
+                                    this.handleClose();
+                                }}>
                                     <ListItemIcon>
                                         {actionDefinition.icon ? (<actionDefinition.icon/>) : (<ErrorIcon/>)}
                                     </ListItemIcon>
@@ -80,6 +91,7 @@ export class ActionDefinition {
     action = undefined;
     icon = ErrorIcon;
     confirmation = undefined;
+    additionalInformation = undefined;
 
     constructor(label, action, icon) {
         this.label = label;
@@ -87,9 +99,15 @@ export class ActionDefinition {
         this.icon = icon;
     }
 
-    addConfirmation() {
+    addAdditionalInfo(info){
+        this.additionalInformation = info;
+        return this;
+    }
+
+    addConfirmation(message = undefined) {
         this.confirmation = {
-            okayLabel: "Okay",
+            message: message,
+            okayLabel: "Confirm",
             okayFunction: null,
             cancelFunction: null,
             cancelLabel: "Cancel",
@@ -97,11 +115,11 @@ export class ActionDefinition {
         return this;
     }
 
-    static commonActions() {
+    static commonActions(additionalInformation = undefined) {
         return {
-            viewAction: ActionDefinition.instance("View", undefined, Visibility),
-            editAction: ActionDefinition.instance("Edit", undefined, Edit),
-            deleteAction: ActionDefinition.instance("Delete", undefined, Delete).addConfirmation(),
+            viewAction: ActionDefinition.instance("View", undefined, Visibility).addAdditionalInfo(additionalInformation),
+            editAction: ActionDefinition.instance("Edit", undefined, Edit).addAdditionalInfo(additionalInformation),
+            deleteAction: ActionDefinition.instance("Delete", undefined, Delete).addConfirmation("Are you sure want to Delete?").addAdditionalInfo(additionalInformation),
         }
     }
 
