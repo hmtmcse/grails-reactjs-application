@@ -64,9 +64,8 @@ export default class RaViewComponent extends Component {
 
 
     isInputValue(fieldName) {
-        console.log("Lock");
-        if (this.state.formEditData && this.state.formEditData[fieldName]) {
-            return this.state.formEditData[fieldName]
+        if (this.state.formData && this.state.formData[fieldName]) {
+            return this.state.formData[fieldName]
         }
     }
 
@@ -96,7 +95,7 @@ export default class RaViewComponent extends Component {
         return {
             error: this.state.formError[fieldName] !== undefined ? this._isInputError(fieldName) : false,
             name: fieldName,
-            value: this.state.formEditData[fieldName] !== undefined ? this.isInputValue(fieldName) : undefined,
+            value: this.state.formData[fieldName] !== undefined ? this.isInputValue(fieldName) : undefined,
             onChange: (event) => {
                 event.preventDefault();
                 const target = event.target;

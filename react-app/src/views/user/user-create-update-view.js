@@ -54,7 +54,7 @@ class UserCreateUpdateView extends RaViewComponent {
             this.setState({edit: true})
             this.showFlashMessage();
             this.getToApi("api/v1/user/details?propertyName=id&propertyValue=" + id, response => {
-                this.setState({formEditData: response.data.response})
+                this.setState({formData: response.data.response})
             });
         }
     }
