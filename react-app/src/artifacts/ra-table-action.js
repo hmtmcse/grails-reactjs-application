@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import {ListItemIcon, MenuItem, Icon} from "@material-ui/core";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import Visibility from '@material-ui/icons/Visibility';
 import ErrorIcon from '@material-ui/icons/Error';
+import ListIcon from '@material-ui/icons/List';
 import _ from 'lodash';
 
 
@@ -40,7 +40,7 @@ export default class RaTableAction extends Component {
                     aria-owns={open ? 'long-menu' : undefined}
                     aria-haspopup="true"
                     onClick={this.handleClick}>
-                    <MoreVertIcon/>
+                    <ListIcon/>
                 </IconButton>
                 <Menu
                     id="long-menu"
