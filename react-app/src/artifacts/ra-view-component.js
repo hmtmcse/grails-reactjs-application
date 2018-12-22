@@ -24,7 +24,7 @@ export default class RaViewComponent extends Component {
             orderBy: "id",
             total: 0,
             max: 0,
-            offset: 0,
+            paginationOffset: 0,
         };
     }
 
@@ -104,20 +104,26 @@ export default class RaViewComponent extends Component {
 
     loadList(condition = {}){}
 
+    getStateValue(key, defaultValue){
+        return this.state[key] ? this.state[key] : defaultValue;;
+    }
+
     paginationProcessor(){
         return{
-            total: this.state.total,
-            rowsPerPage: this.state.max,
-            offset: this.state.offset,
+            total: this.getStateValue("total", 0),
+            rowsPerPage: this.getStateValue("max", AppConstant.rowsPerPage),
+            offset: this.getStateValue("paginationOffset", 0),
             changePagination: (event, page) => {
-                let newOffset = this.state.max;
-                if (newOffset !== this.state.offset) {
-                    this.state.offset =  newOffset;
+                this.state.offset = this.state.max * page;
+                if (this.state.paginationOffset !== page){
+                    this.state.paginationOffset = page;
                     this.loadList();
                 }
             },
             changeItemPerPage:(event) => {
+                this.state.max = event.target.value;
                 console.log("handleChangePage " + event.target.value)
+                this.loadList();
             },
         }
     }

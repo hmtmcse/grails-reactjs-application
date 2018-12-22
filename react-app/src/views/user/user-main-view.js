@@ -80,15 +80,14 @@ class UserMainView extends RaViewComponent {
 
     loadList(condition = {}){
         condition = this.loadOffsetMax(condition);
-        console.log(condition);
         this.postJsonToApi(ApiURL.UserList, condition, response => {
             this.setState({users:response.data.response});
-            this.setState({total: 6})
+            this.setState({total: response.data.total ? response.data.total : 0});
         });
     }
 
 
-    reload = event =>{
+    reload = event => {
       this.loadList();
     };
 

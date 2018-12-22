@@ -3,9 +3,9 @@ export const AppConstant = {
     appName: "HMTMCSE",
     navName: "Navigation",
     loginLabel: "Grails ReactJs Application",
-    rowsPerPage: 5,
+    rowsPerPage: 10,
     defaultOffset: 0,
-    rowsPerPageOptions: [ 5, 20, 50, 100, 500, 1000],
+    rowsPerPageOptions: [ 10, 20, 50, 100, 500, 1000],
 
 
     rootUrl: "/",
