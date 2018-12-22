@@ -156,6 +156,7 @@ export default class RaViewComponent extends Component {
                 this.showErrorInfo(RaStaticHolder.message.message)
             }
         }
+        RaStaticHolder.message = {};
     }
 
     processFormResponse = (response, successRedirectUrl, successMessage, failedRedirectUrl, failedMessage) => {

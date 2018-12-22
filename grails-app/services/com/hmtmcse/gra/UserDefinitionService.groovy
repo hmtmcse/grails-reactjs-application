@@ -37,15 +37,24 @@ class UserDefinitionService {
         gsApiActionDefinition.addResponseProperty("uuid")
         gsApiActionDefinition.successResponseAsData()
         return gsApiActionDefinition
-
     }
+
 
 
     GsApiActionDefinition update(){
         GsApiActionDefinition gsApiActionDefinition = new GsApiActionDefinition<User>(User)
-        gsApiActionDefinition.includeAllThenExcludeFromResponse(["password", "version"])
+        gsApiActionDefinition.addRequestProperty("firstName").required()
+        gsApiActionDefinition.addRequestProperty("lastName")
+        gsApiActionDefinition.addResponseProperty("uuid")
+        gsApiActionDefinition.includeInWhereFilter(["id"])
         gsApiActionDefinition.successResponseAsData()
         return gsApiActionDefinition
+    }
 
+    GsApiActionDefinition delete(){
+        GsApiActionDefinition gsApiActionDefinition = new GsApiActionDefinition<User>(User)
+        gsApiActionDefinition.includeInWhereFilter(["id"])
+        gsApiActionDefinition.successResponseAsData()
+        return gsApiActionDefinition
     }
 }

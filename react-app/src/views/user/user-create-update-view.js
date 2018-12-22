@@ -6,6 +6,7 @@ import {
     Card, CardContent, CardActions, CardHeader, Grid, withStyles
 } from '@material-ui/core'
 import {ApiURL} from "../../app/api-url";
+import {RaGsConditionMaker} from "../../artifacts/ra-gs-condition-maker";
 
 
 
@@ -62,9 +63,18 @@ class UserCreateUpdateView extends RaViewComponent {
     formSubmitHandler = event => {
         event.preventDefault();
         let formData = this.state.formData;
-        this.postJsonToApi(ApiURL.UserCreate, formData,
+        let url = ApiURL.UserCreate;
+        let successMessage = "Successfully Created!!";
+
+        let id = this.getValueFromParams("id");
+        if (id){
+            url = ApiURL.UserUpdate;
+            successMessage = "Successfully Updated!!";
+            formData = RaGsConditionMaker.equal(formData, "id", Number(id))
+        }
+        this.postJsonToApi(url, formData,
             success => {
-            this.processFormResponse(success.data, "/user", "Successfully Created!!");
+            this.processFormResponse(success.data, "/user", successMessage);
             }
         )
     };
@@ -75,7 +85,7 @@ class UserCreateUpdateView extends RaViewComponent {
         const registrationForm = (
             <form onSubmit={this.formSubmitHandler} >
                 <Card>
-                    <CardHeader title="Create User"/>
+                    <CardHeader title={this.state.edit ? "Update User" : "Create User"}/>
                     <CardContent>
                         <Grid container spacing={8}>
                             <Grid item xs={6}><TextField label="First name" {...this.onChangeTextFieldProcessor("firstName")} fullWidth/></Grid>
