@@ -10,6 +10,7 @@ import UserCreateUpdateView from './user-create-update-view';
 import RaTableAction, {ActionDefinition} from "../../artifacts/ra-table-action";
 import {RaGsConditionMaker} from "../../artifacts/ra-gs-condition-maker";
 import {ApiURL} from "../../app/api-url";
+import {AppConstant} from "../../app/app-constant";
 
 
 export const UserOtherUrls = [
@@ -62,10 +63,12 @@ class UserMainView extends RaViewComponent {
     constructor(props) {
         super(props);
         this.state = {
-            viewName: "main",
             orderBy: "id",
             order: "desc",
             users: [],
+            total: 0,
+            max: AppConstant.rowsPerPage,
+            offset: AppConstant.defaultOffset,
         };
     }
 
@@ -76,8 +79,11 @@ class UserMainView extends RaViewComponent {
     }
 
     loadList(condition = {}){
+        condition = this.loadOffsetMax(condition);
+        console.log(condition);
         this.postJsonToApi(ApiURL.UserList, condition, response => {
-            this.setState({users:response.data.response})
+            this.setState({users:response.data.response});
+            this.setState({total: 6})
         });
     }
 
@@ -158,7 +164,7 @@ class UserMainView extends RaViewComponent {
                         </TableBody>
                     </Table>
                 </div>
-                <RaPagination total={100}/>
+                <RaPagination {...this.paginationProcessor()}/>
             </Paper>
         </React.Fragment>);
     }

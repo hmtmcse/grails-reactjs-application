@@ -16,7 +16,7 @@ export default class RaPagination extends RaViewComponent {
     };
 
     render() {
-        const {total} = this.props;
+        const {total, changePagination, changeItemPerPage} = this.props;
         let rowsPerPage = this.props.rowsPerPage ? this.props.rowsPerPage : AppConstant.rowsPerPage;
         let offset = this.props.offset ? this.props.offset : AppConstant.defaultOffset;
         let pagination = (
@@ -32,11 +32,11 @@ export default class RaPagination extends RaViewComponent {
                 nextIconButtonProps={{
                     'aria-label': 'Next Page',
                 }}
-                onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                onChangePage={changePagination}
+                onChangeRowsPerPage={changeItemPerPage}
             />
         );
-        return total > rowsPerPage ? pagination : ''
+        return pagination;
     }
 }
 
@@ -44,5 +44,6 @@ RaPagination.propTypes = {
     total: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number,
     offset: PropTypes.number,
-    // changePagination: PropTypes.func.isRequired
+    changePagination: PropTypes.func.isRequired,
+    changeItemPerPage: PropTypes.func.isRequired
 };

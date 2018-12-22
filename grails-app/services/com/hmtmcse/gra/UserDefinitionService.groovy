@@ -14,7 +14,6 @@ class UserDefinitionService {
     GsApiActionDefinition list(){
         GsApiActionDefinition gsApiActionDefinition = new GsApiActionDefinition<User>(User)
         gsApiActionDefinition.includeAllThenExcludeFromResponse(["password", "version"])
-        gsApiActionDefinition.successResponseAsData()
         gsApiActionDefinition.includeAllThenExcludeFromWhereFilter(["password", "version"])
         return gsApiActionDefinition
     }

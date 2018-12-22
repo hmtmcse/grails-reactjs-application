@@ -19,10 +19,12 @@ export default class RaViewComponent extends Component {
             systemSnackBarVariant: "success",
             systemSnackBarMessage: "Empty Message",
             formData: {},
-            formEditData: {},
             formError: {},
             order: "desc",
-            orderBy: "id"
+            orderBy: "id",
+            total: 0,
+            max: 0,
+            offset: 0,
         };
     }
 
@@ -85,10 +87,39 @@ export default class RaViewComponent extends Component {
 
     setInputValue(fieldName, value) {
         this.setState((state) => {
-            let formEditData = {...state.formEditData};
+            let formEditData = {...state.formData};
             formEditData[fieldName] = value;
-            return {formEditData: formEditData};
+            return {formData: formEditData};
         });
+    }
+
+    loadOffsetMax(condition){
+        if (condition === undefined){
+            condition = {};
+        }
+        condition.max = this.state.max;
+        condition.offset = this.state.offset;
+        return condition;
+    }
+
+    loadList(condition = {}){}
+
+    paginationProcessor(){
+        return{
+            total: this.state.total,
+            rowsPerPage: this.state.max,
+            offset: this.state.offset,
+            changePagination: (event, page) => {
+                let newOffset = this.state.max;
+                if (newOffset !== this.state.offset) {
+                    this.state.offset =  newOffset;
+                    this.loadList();
+                }
+            },
+            changeItemPerPage:(event) => {
+                console.log("handleChangePage " + event.target.value)
+            },
+        }
     }
 
     _isInputErrorMessage(fieldName) {
