@@ -6,9 +6,25 @@ import {AuthenticationService} from "../services/authentication-service";
 import RaStaticHolder from "../artifacts/ra-static-holder";
 import {AppConstant} from "../app/app-constant";
 import {ApiURL} from "../app/api-url";
+import {RaGsConditionMaker} from "./ra-gs-condition-maker";
 
 
 export default class RaViewComponent extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isSystemProgressBarEnabled: false,
+            showSystemSnackBar: false,
+            systemSnackBarVariant: "success",
+            systemSnackBarMessage: "Empty Message",
+            formData: {},
+            formEditData: {},
+            formError: {},
+            order: "desc",
+            orderBy: "id"
+        };
+    }
 
     showProgressbar = () => {
         this.setState({isSystemProgressBarEnabled: true})
@@ -38,17 +54,15 @@ export default class RaViewComponent extends Component {
         });
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isSystemProgressBarEnabled: false,
-            showSystemSnackBar: false,
-            systemSnackBarVariant: "success",
-            systemSnackBarMessage: "Empty Message",
-            formData: {},
-            formEditData: {},
-            formError: {},
-        };
+
+    sortProcessor (name){
+        const orderBy = name ? name : this.state.orderBy;
+        let order = 'desc';
+        if (this.state.orderBy === name && this.state.order === 'desc') {
+            order = 'asc';
+        }
+        this.setState({order, orderBy});
+        return RaGsConditionMaker.order({}, name, order);
     }
 
     goToUrl = (url, event, state) => {

@@ -1,9 +1,7 @@
 import React from 'react'
 import RaViewComponent from "./../../artifacts/ra-view-component";
 import {
-    TableRow, TableCell, TableHead, TableBody, TableFooter, TablePagination, Paper, MenuItem,
-    TableSortLabel, Table, FormControlLabel, Checkbox, FormGroup, FormLabel, RadioGroup,
-    IconButton, CardContent, Typography, CardActions, CardHeader, CardMedia, Tooltip, Button, Grid, TextField
+    TableRow, TableCell, TableBody, Paper, Table, Typography,Button,TextField
 } from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import RaTableHeader from './../../artifacts/ra-table-header';
@@ -77,20 +75,21 @@ class UserMainView extends RaViewComponent {
         this.loadList();
     }
 
-    loadList(){
-        this.getToApi("api/v1/user/list", response => {
+    loadList(condition = {}){
+        this.postJsonToApi(ApiURL.UserList, condition, response => {
             this.setState({users:response.data.response})
         });
     }
 
 
+    reload = event =>{
+      this.loadList();
+    };
+
+
     clickOnSort = (name, row, event) => {
-        const orderBy = name;
-        let order = 'desc';
-        if (this.state.orderBy === name && this.state.order === 'desc') {
-            order = 'asc';
-        }
-        this.setState({order, orderBy});
+        let condition = this.sortProcessor(name);
+        this.loadList(condition);
     };
 
 
@@ -135,7 +134,7 @@ class UserMainView extends RaViewComponent {
                         <TextField placeholder="search" name="search"/>
                     </form>
                     <Button className={classes.marginToLeft} onClick={event =>{this.goToUrl("/user/create-update", event)}} variant="contained" color="primary">Create</Button>
-                    <Button className={classes.marginToLeft} variant="contained" color="primary">Reload</Button>
+                    <Button className={classes.marginToLeft} onClick={this.reload} variant="contained" color="primary">Reload</Button>
                 </div>
             </Paper>
             <Paper className={classes.root}>

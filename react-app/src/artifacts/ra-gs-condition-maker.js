@@ -1,14 +1,22 @@
 
 export class RaGsConditionMaker {
 
-    static equal(data, key, value){
+    static whereMaker(data, key, value, type){
         if(!data.where){
             data.where = {}
         }
-        if (!data.where.equal){
-            data.where.equal = {}
+        if (!data.where[type]){
+            data.where[type] = {}
         }
-        data.where.equal[key] = value;
+        data.where[type][key] = value;
         return data;
+    }
+
+    static equal(data, key, value){
+        return this.whereMaker(data, key, value, "equal");
+    }
+
+    static order(data, key, value){
+        return this.whereMaker(data, key, value, "order");
     }
 }
