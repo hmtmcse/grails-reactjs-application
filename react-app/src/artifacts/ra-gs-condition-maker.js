@@ -5,10 +5,10 @@ export class RaGsConditionMaker {
         if(!data.where){
             data.where = {}
         }
-        if (!data.where.eq){
-            data.where.eq = {}
+        if (!data.where.equal){
+            data.where.equal = {}
         }
-        data.where.eq[key] = value;
+        data.where.equal[key] = value;
         return data;
     }
 }

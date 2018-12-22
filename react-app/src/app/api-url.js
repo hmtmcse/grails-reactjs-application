@@ -10,7 +10,7 @@ export const ApiURL = {
     UserList: "",
     UserCreate: "api/v1/user/create",
     UserUpdate: "api/v1/user/update",
-    UserDelete: "",
+    UserDelete: "api/v1/user/delete",
     UserDetails: "",
 
 

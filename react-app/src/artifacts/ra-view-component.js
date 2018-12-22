@@ -229,6 +229,16 @@ export default class RaViewComponent extends Component {
     deleteToApi() {
     }
 
+    deleteJsonToApi(url, data, success, failed) {
+        let dataSet = {
+            method: 'delete',
+            url: url,
+            data: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        };
+        this.callToApiByAxios(dataSet, success, failed);
+    }
+
 
     getToApi(url, success) {
         let dataSet = {

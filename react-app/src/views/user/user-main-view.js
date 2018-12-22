@@ -10,6 +10,8 @@ import RaTableHeader from './../../artifacts/ra-table-header';
 import RaPagination from './../../artifacts/ra-pagination';
 import UserCreateUpdateView from './user-create-update-view';
 import RaTableAction, {ActionDefinition} from "../../artifacts/ra-table-action";
+import {RaGsConditionMaker} from "../../artifacts/ra-gs-condition-maker";
+import {ApiURL} from "../../app/api-url";
 
 
 export const UserOtherUrls = [
@@ -72,6 +74,10 @@ class UserMainView extends RaViewComponent {
 
     componentDidMount() {
         this.showFlashMessage();
+        this.loadList();
+    }
+
+    loadList(){
         this.getToApi("api/v1/user/list", response => {
             this.setState({users:response.data.response})
         });
@@ -89,18 +95,22 @@ class UserMainView extends RaViewComponent {
 
 
     deleteAction = (event, actionDefinition) =>{
-        console.log("Delete " + actionDefinition);
-    };
-
-    viewAction = (event, actionDefinition) =>{
         let additionalInformation = actionDefinition.additionalInformation;
-        console.log("View " + additionalInformation.email);
+        let component = actionDefinition.component;
+        if (additionalInformation.id) {
+            let formData = RaGsConditionMaker.equal({}, "id", additionalInformation.id);
+            component.deleteJsonToApi(ApiURL.UserDelete, formData,
+                success => {
+                    component.processFormResponse(success.data, "/user");
+                    component.loadList();
+                    component.showSuccessInfo("Successfully Deleted")
+                }
+            )
+        }
     };
 
     editAction (event, actionDefinition){
         let additionalInformation = actionDefinition.additionalInformation;
-        console.log("Edit " + actionDefinition);
-        console.log(event);
         actionDefinition.component.goToUrl("/user/create-update/" + additionalInformation.id)
     };
 
@@ -110,7 +120,7 @@ class UserMainView extends RaViewComponent {
         let tableActions = info =>{
             let actions = ActionDefinition.commonActions(info, this);
             actions.editAction.action = this.editAction;
-            actions.viewAction.action = this.viewAction;
+            delete (actions.viewAction);
             actions.deleteAction.action = this.deleteAction;
             return actions;
         };
