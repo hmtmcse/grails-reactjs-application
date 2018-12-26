@@ -17,6 +17,31 @@ const mainLayoutJSS = theme => ({
     }
 });
 
+const viewCommon = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+    },
+    table: {
+        minWidth: 1020,
+    },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
+    mainActionArea : {
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "8px",
+    },
+    marginToLeft : {
+        marginLeft: theme.spacing.unit,
+    },
+    displayInline : {
+        display: "inline",
+    },
+});
+
 export {
-    mainLayoutJSS
+    mainLayoutJSS,
+    viewCommon
 };

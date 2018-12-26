@@ -1,38 +1,12 @@
 import RaViewComponent from "../../artifacts/ra-view-component";
 import React from "react";
 import {
-    Button, TextField, FormControl, InputLabel, Radio,
-    Select,MenuItem, FormHelperText, Checkbox, FormGroup, FormLabel,RadioGroup,
-    Card, CardContent, CardActions, CardHeader, Grid, withStyles
+    Button, TextField, Card, CardContent, CardActions, CardHeader, Grid, withStyles
 } from '@material-ui/core'
 import {ApiURL} from "../../app/api-url";
 import {RaGsConditionMaker} from "../../artifacts/ra-gs-condition-maker";
+import {viewCommon} from "../../assets/jss/style-jss";
 
-
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-        minWidth: 1020,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-    mainActionArea : {
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "8px",
-    },
-    marginToLeft : {
-        marginLeft: theme.spacing.unit,
-    },
-    displayInline : {
-        display: "inline",
-    },
-});
 
 
 class UserCreateUpdateView extends RaViewComponent {
@@ -74,7 +48,7 @@ class UserCreateUpdateView extends RaViewComponent {
         }
         this.postJsonToApi(url, formData,
             success => {
-            this.processFormResponse(success.data, "/user", successMessage);
+                this.processFormResponse(success.data, "/user", successMessage);
             }
         )
     };
@@ -107,4 +81,4 @@ class UserCreateUpdateView extends RaViewComponent {
     }
 }
 
-export default withStyles(styles)(UserCreateUpdateView);
+export default withStyles(viewCommon)(UserCreateUpdateView);

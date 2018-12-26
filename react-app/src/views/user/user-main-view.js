@@ -11,6 +11,7 @@ import RaTableAction, {ActionDefinition} from "../../artifacts/ra-table-action";
 import {RaGsConditionMaker} from "../../artifacts/ra-gs-condition-maker";
 import {ApiURL} from "../../app/api-url";
 import {AppConstant} from "../../app/app-constant";
+import {viewCommon} from "../../assets/jss/style-jss";
 
 
 export const UserOtherUrls = [
@@ -27,30 +28,6 @@ export const UserOtherUrls = [
         isActive: true,
     }
 ];
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-        minWidth: 1020,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-    mainActionArea : {
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "8px",
-    },
-    marginToLeft : {
-        marginLeft: theme.spacing.unit,
-    },
-    displayInline : {
-        display: "inline",
-    },
-});
 
 
 const tableHeader = [
@@ -88,7 +65,7 @@ class UserMainView extends RaViewComponent {
 
 
     reload = event => {
-      this.loadList();
+        this.loadList();
     };
 
 
@@ -168,4 +145,4 @@ class UserMainView extends RaViewComponent {
         </React.Fragment>);
     }
 }
-export default withStyles(styles)(UserMainView);
+export default withStyles(viewCommon)(UserMainView);
